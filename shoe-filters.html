@@ -1,0 +1,891 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shoe Filters</title>
+    <style>
+        :root {
+            --background: hsl(0, 0%, 98%);
+            --foreground: hsl(220, 13%, 18%);
+            --card: hsl(0, 0%, 100%);
+            --card-foreground: hsl(220, 13%, 18%);
+            --primary: hsl(220, 13%, 18%);
+            --primary-foreground: hsl(0, 0%, 100%);
+            --secondary: hsl(0, 0%, 96%);
+            --secondary-foreground: hsl(220, 13%, 18%);
+            --muted: hsl(0, 0%, 96%);
+            --muted-foreground: hsl(220, 9%, 46%);
+            --accent: hsl(220, 13%, 91%);
+            --accent-foreground: hsl(220, 13%, 18%);
+            --border: hsl(220, 13%, 91%);
+            --filter-button: hsl(0, 0%, 100%);
+            --filter-button-hover: hsl(220, 13%, 96%);
+            --filter-button-border: hsl(220, 13%, 91%);
+            --filter-panel: hsl(0, 0%, 100%);
+            --filter-panel-border: hsl(220, 13%, 91%);
+            --price-track: hsl(220, 13%, 91%);
+            --price-thumb: hsl(220, 13%, 18%);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            background-color: var(--background);
+            color: var(--foreground);
+            line-height: 1.6;
+            padding: 2rem 1rem;
+        }
+
+        .container {
+            max-width: 1024px;
+            margin: 0 auto;
+            padding: 0 1.5rem;
+        }
+
+        .title {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .title h1 {
+            font-size: 1.875rem;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+        }
+
+        .title p {
+            color: var(--muted-foreground);
+        }
+
+        .filter-section {
+            margin-bottom: 1rem;
+        }
+
+        .filter-button {
+            width: 100%;
+            padding: 1rem;
+            background-color: var(--filter-button);
+            border: 1px solid var(--filter-button-border);
+            border-radius: 0.75rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            cursor: pointer;
+            transition: all 0.2s ease-in-out;
+            font-size: 1.125rem;
+            font-weight: 500;
+        }
+
+        .filter-button:hover {
+            background-color: var(--filter-button-hover);
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        }
+
+        .filter-button.active {
+            background-color: var(--accent);
+            border-color: var(--primary);
+        }
+
+        .filter-button-content {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .filter-icon {
+            width: 1.25rem;
+            height: 1.25rem;
+            color: var(--muted-foreground);
+            transition: color 0.2s;
+        }
+
+        .filter-button:hover .filter-icon {
+            color: var(--foreground);
+        }
+
+        .chevron {
+            width: 1.25rem;
+            height: 1.25rem;
+            color: var(--muted-foreground);
+            transition: transform 0.2s;
+        }
+
+        .chevron.up {
+            transform: rotate(180deg);
+        }
+
+        .filter-panel {
+            background-color: var(--filter-panel);
+            border: 1px solid var(--filter-panel-border);
+            border-radius: 0.75rem;
+            padding: 1.5rem;
+            margin-top: 0.5rem;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+            display: none;
+            animation: slideDown 0.2s ease-out;
+        }
+
+        .filter-panel.active {
+            display: block;
+        }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .filter-title {
+            font-size: 1.125rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+
+        .checkbox-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 0.75rem;
+        }
+
+        .checkbox-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem;
+            border-radius: 0.375rem;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+
+        .checkbox-item:hover {
+            background-color: var(--accent);
+        }
+
+        .checkbox-item input {
+            width: 1rem;
+            height: 1rem;
+            accent-color: var(--primary);
+        }
+
+        .checkbox-item label {
+            font-size: 0.875rem;
+            cursor: pointer;
+        }
+
+        /* Color Filter Styles */
+        .color-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
+            gap: 0.75rem;
+        }
+
+        .color-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.25rem;
+            cursor: pointer;
+        }
+
+        .color-circle {
+            width: 2rem;
+            height: 2rem;
+            border-radius: 50%;
+            border: 2px solid var(--border);
+            transition: all 0.2s;
+            position: relative;
+        }
+
+        .color-circle:hover {
+            transform: scale(1.05);
+        }
+
+        .color-circle.selected {
+            border-color: var(--primary);
+            transform: scale(1.1);
+        }
+
+        .color-circle.selected::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 0.5rem;
+            height: 0.5rem;
+            background-color: var(--primary);
+            border-radius: 50%;
+        }
+
+        .color-name {
+            font-size: 0.75rem;
+            color: var(--muted-foreground);
+            text-align: center;
+        }
+
+        /* Size Filter Styles */
+        .gender-buttons {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .gender-button {
+            padding: 0.5rem 1rem;
+            border-radius: 0.5rem;
+            border: none;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.2s;
+        }
+
+        .gender-button.active {
+            background-color: var(--primary);
+            color: var(--primary-foreground);
+        }
+
+        .gender-button:not(.active) {
+            background-color: var(--secondary);
+            color: var(--secondary-foreground);
+        }
+
+        .gender-button:not(.active):hover {
+            background-color: var(--accent);
+        }
+
+        .size-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(48px, 1fr));
+            gap: 0.5rem;
+        }
+
+        .size-button {
+            width: 3rem;
+            height: 3rem;
+            border: 1px solid var(--border);
+            border-radius: 0.5rem;
+            background-color: var(--background);
+            color: var(--foreground);
+            font-size: 0.875rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .size-button:hover {
+            background-color: var(--accent);
+        }
+
+        .size-button.selected {
+            background-color: var(--primary);
+            color: var(--primary-foreground);
+            border-color: var(--primary);
+        }
+
+        /* Price Filter Styles */
+        .price-container {
+            padding: 1rem 0;
+        }
+
+        .price-labels {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 0.5rem;
+            font-size: 0.875rem;
+            color: var(--muted-foreground);
+        }
+
+        .slider-container {
+            position: relative;
+            height: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .slider-track {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 100%;
+            height: 0.5rem;
+            background-color: var(--price-track);
+            border-radius: 9999px;
+        }
+
+        .slider-range {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            height: 0.5rem;
+            background-color: var(--price-thumb);
+            border-radius: 9999px;
+        }
+
+        .slider-input {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 100%;
+            height: 1.5rem;
+            background: transparent;
+            appearance: none;
+            cursor: pointer;
+        }
+
+        .slider-input::-webkit-slider-thumb {
+            appearance: none;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: var(--price-thumb);
+            cursor: pointer;
+            border: 2px solid var(--background);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .slider-input::-moz-range-thumb {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: var(--price-thumb);
+            cursor: pointer;
+            border: 2px solid var(--background);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .price-values {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .price-value {
+            text-align: center;
+        }
+
+        .price-label {
+            font-size: 0.875rem;
+            color: var(--muted-foreground);
+            margin-bottom: 0.25rem;
+        }
+
+        .price-amount {
+            font-size: 1.125rem;
+            font-weight: 600;
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+        @media (max-width: 768px) {
+            .checkbox-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .color-grid {
+                grid-template-columns: repeat(4, 1fr);
+            }
+            
+            .size-grid {
+                grid-template-columns: repeat(5, 1fr);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="title">
+            <h1>Shoe Filters</h1>
+            <p>Find your perfect pair</p>
+        </div>
+
+        <!-- Brands Filter -->
+        <div class="filter-section">
+            <button class="filter-button" onclick="toggleFilter('brands')">
+                <div class="filter-button-content">
+                    <svg class="filter-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z"></path>
+                    </svg>
+                    <span>Brands</span>
+                </div>
+                <svg class="chevron" id="brands-chevron" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                </svg>
+            </button>
+            <div class="filter-panel" id="brands-panel">
+                <h3 class="filter-title">Select Brands</h3>
+                <div class="checkbox-grid">
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="nike" name="brands" value="nike">
+                        <label for="nike">Nike</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="adidas" name="brands" value="adidas">
+                        <label for="adidas">Adidas</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="jordan" name="brands" value="jordan">
+                        <label for="jordan">Jordan</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="puma" name="brands" value="puma">
+                        <label for="puma">Puma</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="newbalance" name="brands" value="newbalance">
+                        <label for="newbalance">New Balance</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="vans" name="brands" value="vans">
+                        <label for="vans">Vans</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="converse" name="brands" value="converse">
+                        <label for="converse">Converse</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="reebok" name="brands" value="reebok">
+                        <label for="reebok">Reebok</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="asics" name="brands" value="asics">
+                        <label for="asics">ASICS</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="skechers" name="brands" value="skechers">
+                        <label for="skechers">Skechers</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="underarmour" name="brands" value="underarmour">
+                        <label for="underarmour">Under Armour</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="fila" name="brands" value="fila">
+                        <label for="fila">Fila</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Colors Filter -->
+        <div class="filter-section">
+            <button class="filter-button" onclick="toggleFilter('colors')">
+                <div class="filter-button-content">
+                    <svg class="filter-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zM7 3H5a2 2 0 00-2 2v12a4 4 0 004 4h2a2 2 0 002-2V5a2 2 0 00-2-2z"></path>
+                    </svg>
+                    <span>Colors</span>
+                </div>
+                <svg class="chevron" id="colors-chevron" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                </svg>
+            </button>
+            <div class="filter-panel" id="colors-panel">
+                <h3 class="filter-title">Select Colors</h3>
+                <div class="color-grid">
+                    <div class="color-item" onclick="toggleColor('black')">
+                        <div class="color-circle" id="color-black" style="background-color: #000000;"></div>
+                        <span class="color-name">Black</span>
+                    </div>
+                    <div class="color-item" onclick="toggleColor('white')">
+                        <div class="color-circle" id="color-white" style="background-color: #FFFFFF; border-color: #ccc;"></div>
+                        <span class="color-name">White</span>
+                    </div>
+                    <div class="color-item" onclick="toggleColor('red')">
+                        <div class="color-circle" id="color-red" style="background-color: #DC2626;"></div>
+                        <span class="color-name">Red</span>
+                    </div>
+                    <div class="color-item" onclick="toggleColor('blue')">
+                        <div class="color-circle" id="color-blue" style="background-color: #2563EB;"></div>
+                        <span class="color-name">Blue</span>
+                    </div>
+                    <div class="color-item" onclick="toggleColor('green')">
+                        <div class="color-circle" id="color-green" style="background-color: #16A34A;"></div>
+                        <span class="color-name">Green</span>
+                    </div>
+                    <div class="color-item" onclick="toggleColor('yellow')">
+                        <div class="color-circle" id="color-yellow" style="background-color: #EAB308;"></div>
+                        <span class="color-name">Yellow</span>
+                    </div>
+                    <div class="color-item" onclick="toggleColor('purple')">
+                        <div class="color-circle" id="color-purple" style="background-color: #9333EA;"></div>
+                        <span class="color-name">Purple</span>
+                    </div>
+                    <div class="color-item" onclick="toggleColor('pink')">
+                        <div class="color-circle" id="color-pink" style="background-color: #EC4899;"></div>
+                        <span class="color-name">Pink</span>
+                    </div>
+                    <div class="color-item" onclick="toggleColor('orange')">
+                        <div class="color-circle" id="color-orange" style="background-color: #EA580C;"></div>
+                        <span class="color-name">Orange</span>
+                    </div>
+                    <div class="color-item" onclick="toggleColor('gray')">
+                        <div class="color-circle" id="color-gray" style="background-color: #6B7280;"></div>
+                        <span class="color-name">Gray</span>
+                    </div>
+                    <div class="color-item" onclick="toggleColor('brown')">
+                        <div class="color-circle" id="color-brown" style="background-color: #A16207;"></div>
+                        <span class="color-name">Brown</span>
+                    </div>
+                    <div class="color-item" onclick="toggleColor('navy')">
+                        <div class="color-circle" id="color-navy" style="background-color: #1E3A8A;"></div>
+                        <span class="color-name">Navy</span>
+                    </div>
+                    <div class="color-item" onclick="toggleColor('beige')">
+                        <div class="color-circle" id="color-beige" style="background-color: #F5F5DC;"></div>
+                        <span class="color-name">Beige</span>
+                    </div>
+                    <div class="color-item" onclick="toggleColor('maroon')">
+                        <div class="color-circle" id="color-maroon" style="background-color: #7F1D1D;"></div>
+                        <span class="color-name">Maroon</span>
+                    </div>
+                    <div class="color-item" onclick="toggleColor('teal')">
+                        <div class="color-circle" id="color-teal" style="background-color: #0F766E;"></div>
+                        <span class="color-name">Teal</span>
+                    </div>
+                    <div class="color-item" onclick="toggleColor('silver')">
+                        <div class="color-circle" id="color-silver" style="background-color: #C0C0C0;"></div>
+                        <span class="color-name">Silver</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Sizes Filter -->
+        <div class="filter-section">
+            <button class="filter-button" onclick="toggleFilter('sizes')">
+                <div class="filter-button-content">
+                    <svg class="filter-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 10h16M4 14h16M4 18h16"></path>
+                    </svg>
+                    <span>Sizes</span>
+                </div>
+                <svg class="chevron" id="sizes-chevron" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                </svg>
+            </button>
+            <div class="filter-panel" id="sizes-panel">
+                <h3 class="filter-title">Select Sizes</h3>
+                <div class="gender-buttons">
+                    <button class="gender-button active" onclick="changeGender('men')">Men's Sizes</button>
+                    <button class="gender-button" onclick="changeGender('women')">Women's Sizes</button>
+                </div>
+                <div class="size-grid" id="size-grid">
+                    <!-- Men's sizes by default -->
+                    <button class="size-button" onclick="toggleSize('6')">6</button>
+                    <button class="size-button" onclick="toggleSize('6.5')">6.5</button>
+                    <button class="size-button" onclick="toggleSize('7')">7</button>
+                    <button class="size-button" onclick="toggleSize('7.5')">7.5</button>
+                    <button class="size-button" onclick="toggleSize('8')">8</button>
+                    <button class="size-button" onclick="toggleSize('8.5')">8.5</button>
+                    <button class="size-button" onclick="toggleSize('9')">9</button>
+                    <button class="size-button" onclick="toggleSize('9.5')">9.5</button>
+                    <button class="size-button" onclick="toggleSize('10')">10</button>
+                    <button class="size-button" onclick="toggleSize('10.5')">10.5</button>
+                    <button class="size-button" onclick="toggleSize('11')">11</button>
+                    <button class="size-button" onclick="toggleSize('11.5')">11.5</button>
+                    <button class="size-button" onclick="toggleSize('12')">12</button>
+                    <button class="size-button" onclick="toggleSize('13')">13</button>
+                    <button class="size-button" onclick="toggleSize('14')">14</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Materials Filter -->
+        <div class="filter-section">
+            <button class="filter-button" onclick="toggleFilter('materials')">
+                <div class="filter-button-content">
+                    <svg class="filter-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
+                    </svg>
+                    <span>Materials</span>
+                </div>
+                <svg class="chevron" id="materials-chevron" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                </svg>
+            </button>
+            <div class="filter-panel" id="materials-panel">
+                <h3 class="filter-title">Select Materials</h3>
+                <div class="checkbox-grid">
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="leather" name="materials" value="leather">
+                        <label for="leather">Leather</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="canvas" name="materials" value="canvas">
+                        <label for="canvas">Canvas</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="mesh" name="materials" value="mesh">
+                        <label for="mesh">Mesh</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="suede" name="materials" value="suede">
+                        <label for="suede">Suede</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="synthetic" name="materials" value="synthetic">
+                        <label for="synthetic">Synthetic</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="knit" name="materials" value="knit">
+                        <label for="knit">Knit</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="rubber" name="materials" value="rubber">
+                        <label for="rubber">Rubber</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="patentleather" name="materials" value="patentleather">
+                        <label for="patentleather">Patent Leather</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="nubuck" name="materials" value="nubuck">
+                        <label for="nubuck">Nubuck</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="textile" name="materials" value="textile">
+                        <label for="textile">Textile</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="flyknit" name="materials" value="flyknit">
+                        <label for="flyknit">Flyknit</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="primeknit" name="materials" value="primeknit">
+                        <label for="primeknit">Primeknit</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Price Filter -->
+        <div class="filter-section">
+            <button class="filter-button" onclick="toggleFilter('price')">
+                <div class="filter-button-content">
+                    <svg class="filter-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1"></path>
+                    </svg>
+                    <span>Price</span>
+                </div>
+                <svg class="chevron" id="price-chevron" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                </svg>
+            </button>
+            <div class="filter-panel" id="price-panel">
+                <h3 class="filter-title">Price Range</h3>
+                <div class="price-container">
+                    <div class="price-labels">
+                        <span>$0</span>
+                        <span>$1000</span>
+                    </div>
+                    <div class="slider-container">
+                        <div class="slider-track"></div>
+                        <div class="slider-range" id="slider-range"></div>
+                        <input type="range" class="slider-input" id="min-price" min="0" max="1000" value="0" oninput="updatePriceRange()">
+                        <input type="range" class="slider-input" id="max-price" min="0" max="1000" value="1000" oninput="updatePriceRange()">
+                    </div>
+                    <div class="price-values">
+                        <div class="price-value">
+                            <div class="price-label">Min Price</div>
+                            <div class="price-amount" id="min-price-display">$0</div>
+                        </div>
+                        <div class="price-value">
+                            <div class="price-label">Max Price</div>
+                            <div class="price-amount" id="max-price-display">$1000</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Sports Filter -->
+        <div class="filter-section">
+            <button class="filter-button" onclick="toggleFilter('sports')">
+                <div class="filter-button-content">
+                    <svg class="filter-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+                    </svg>
+                    <span>Sports</span>
+                </div>
+                <svg class="chevron" id="sports-chevron" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                </svg>
+            </button>
+            <div class="filter-panel" id="sports-panel">
+                <h3 class="filter-title">Select Sports</h3>
+                <div class="checkbox-grid">
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="basketball" name="sports" value="basketball">
+                        <label for="basketball">Basketball</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="soccer" name="sports" value="soccer">
+                        <label for="soccer">Soccer</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="football" name="sports" value="football">
+                        <label for="football">Football</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="running" name="sports" value="running">
+                        <label for="running">Running</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="tennis" name="sports" value="tennis">
+                        <label for="tennis">Tennis</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="golf" name="sports" value="golf">
+                        <label for="golf">Golf</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="baseball" name="sports" value="baseball">
+                        <label for="baseball">Baseball</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="volleyball" name="sports" value="volleyball">
+                        <label for="volleyball">Volleyball</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="crosstraining" name="sports" value="crosstraining">
+                        <label for="crosstraining">Cross Training</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="walking" name="sports" value="walking">
+                        <label for="walking">Walking</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="skateboarding" name="sports" value="skateboarding">
+                        <label for="skateboarding">Skateboarding</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="cycling" name="sports" value="cycling">
+                        <label for="cycling">Cycling</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let activeFilter = null;
+        let selectedGender = 'men';
+        let selectedSizes = [];
+        let selectedColors = [];
+
+        const menSizes = ["6", "6.5", "7", "7.5", "8", "8.5", "9", "9.5", "10", "10.5", "11", "11.5", "12", "13", "14"];
+        const womenSizes = ["5", "5.5", "6", "6.5", "7", "7.5", "8", "8.5", "9", "9.5", "10", "10.5", "11", "12"];
+
+        function toggleFilter(filterName) {
+            const panel = document.getElementById(filterName + '-panel');
+            const button = panel.previousElementSibling;
+            const chevron = document.getElementById(filterName + '-chevron');
+            
+            if (activeFilter === filterName) {
+                // Close current filter
+                panel.classList.remove('active');
+                button.classList.remove('active');
+                chevron.classList.remove('up');
+                activeFilter = null;
+            } else {
+                // Close any open filter
+                if (activeFilter) {
+                    const oldPanel = document.getElementById(activeFilter + '-panel');
+                    const oldButton = oldPanel.previousElementSibling;
+                    const oldChevron = document.getElementById(activeFilter + '-chevron');
+                    oldPanel.classList.remove('active');
+                    oldButton.classList.remove('active');
+                    oldChevron.classList.remove('up');
+                }
+                
+                // Open new filter
+                panel.classList.add('active');
+                button.classList.add('active');
+                chevron.classList.add('up');
+                activeFilter = filterName;
+            }
+        }
+
+        function toggleColor(colorName) {
+            const colorElement = document.getElementById('color-' + colorName);
+            if (selectedColors.includes(colorName)) {
+                selectedColors = selectedColors.filter(c => c !== colorName);
+                colorElement.classList.remove('selected');
+            } else {
+                selectedColors.push(colorName);
+                colorElement.classList.add('selected');
+            }
+        }
+
+        function changeGender(gender) {
+            selectedGender = gender;
+            selectedSizes = []; // Clear selected sizes when switching gender
+            
+            // Update button states
+            const buttons = document.querySelectorAll('.gender-button');
+            buttons.forEach(btn => {
+                btn.classList.remove('active');
+            });
+            event.target.classList.add('active');
+            
+            // Update size grid
+            const sizeGrid = document.getElementById('size-grid');
+            const sizes = gender === 'men' ? menSizes : womenSizes;
+            
+            sizeGrid.innerHTML = sizes.map(size => 
+                `<button class="size-button" onclick="toggleSize('${size}')">${size}</button>`
+            ).join('');
+        }
+
+        function toggleSize(size) {
+            if (selectedSizes.includes(size)) {
+                selectedSizes = selectedSizes.filter(s => s !== size);
+                event.target.classList.remove('selected');
+            } else {
+                selectedSizes.push(size);
+                event.target.classList.add('selected');
+            }
+        }
+
+        function updatePriceRange() {
+            const minPrice = parseInt(document.getElementById('min-price').value);
+            const maxPrice = parseInt(document.getElementById('max-price').value);
+            
+            // Ensure min doesn't exceed max
+            if (minPrice > maxPrice) {
+                document.getElementById('min-price').value = maxPrice;
+                return;
+            }
+            
+            // Update displays
+            document.getElementById('min-price-display').textContent = '$' + minPrice;
+            document.getElementById('max-price-display').textContent = '$' + maxPrice;
+            
+            // Update visual range
+            const range = document.getElementById('slider-range');
+            const leftPercent = (minPrice / 1000) * 100;
+            const widthPercent = ((maxPrice - minPrice) / 1000) * 100;
+            
+            range.style.left = leftPercent + '%';
+            range.style.width = widthPercent + '%';
+        }
+
+        // Initialize price range
+        updatePriceRange();
+    </script>
+</body>
+</html>

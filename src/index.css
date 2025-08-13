@@ -133,4 +133,4 @@ All colors MUST be HSL.
   cursor: pointer;
   border: 2px solid hsl(var(--background));
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-}}
+}
