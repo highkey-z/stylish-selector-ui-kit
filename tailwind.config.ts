@@ -52,6 +52,13 @@ export default {
 					DEFAULT: 'hsl(var(--card))',
 					foreground: 'hsl(var(--card-foreground))'
 				},
+				'filter-button': 'hsl(var(--filter-button))',
+				'filter-button-hover': 'hsl(var(--filter-button-hover))',
+				'filter-button-border': 'hsl(var(--filter-button-border))',
+				'filter-panel': 'hsl(var(--filter-panel))',
+				'filter-panel-border': 'hsl(var(--filter-panel-border))',
+				'price-track': 'hsl(var(--price-track))',
+				'price-thumb': 'hsl(var(--price-thumb))',
 				sidebar: {
 					DEFAULT: 'hsl(var(--sidebar-background))',
 					foreground: 'hsl(var(--sidebar-foreground))',
