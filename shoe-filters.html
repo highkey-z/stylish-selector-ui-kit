@@ -3,1401 +3,488 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Shoe Store App</title>
+    <title>Steppr - Premium Sneakers</title>
     <style>
         :root {
-            --background: hsl(0, 0%, 98%);
-            --foreground: hsl(220, 13%, 18%);
+            --bg: hsl(0, 0%, 98%);
             --card: hsl(0, 0%, 100%);
-            --card-foreground: hsl(220, 13%, 18%);
-            --primary: hsl(220, 13%, 18%);
-            --primary-foreground: hsl(0, 0%, 100%);
-            --secondary: hsl(0, 0%, 96%);
-            --secondary-foreground: hsl(220, 13%, 18%);
-            --muted: hsl(0, 0%, 96%);
-            --muted-foreground: hsl(220, 9%, 46%);
-            --accent: hsl(220, 13%, 91%);
-            --accent-foreground: hsl(220, 13%, 18%);
+            --text: hsl(220, 13%, 18%);
+            --muted: hsl(220, 9%, 46%);
             --border: hsl(220, 13%, 91%);
-            --filter-button: hsl(0, 0%, 100%);
-            --filter-button-hover: hsl(220, 13%, 96%);
-            --filter-button-border: hsl(220, 13%, 91%);
-            --filter-panel: hsl(0, 0%, 100%);
-            --filter-panel-border: hsl(220, 13%, 91%);
-            --price-track: hsl(220, 13%, 91%);
-            --price-thumb: hsl(220, 13%, 18%);
-        }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-            background-color: var(--background);
-            color: var(--foreground);
-            line-height: 1.6;
-            padding-bottom: 80px;
-        }
-
-        .app-container {
-            max-width: 1024px;
-            margin: 0 auto;
-            min-height: 100vh;
-        }
-
-        .content-section {
-            display: none;
-            padding: 1rem;
-            min-height: calc(100vh - 80px);
-        }
-
-        .content-section.active {
-            display: block;
-        }
-
-        /* Bottom Navigation */
-        .bottom-nav {
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            background: var(--card);
-            border-top: 1px solid var(--border);
-            padding: 0.5rem 0;
-            z-index: 1000;
-        }
-
-        .nav-container {
-            max-width: 1024px;
-            margin: 0 auto;
-            display: flex;
-            justify-content: space-around;
-            align-items: center;
-        }
-
-        .nav-item {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            padding: 0.5rem;
-            cursor: pointer;
-            transition: all 0.2s;
-            color: var(--muted-foreground);
-            text-decoration: none;
-            min-width: 60px;
-        }
-
-        .nav-item.active {
-            color: var(--primary);
-        }
-
-        .nav-icon {
-            width: 24px;
-            height: 24px;
-            margin-bottom: 0.25rem;
-        }
-
-        .nav-label {
-            font-size: 0.75rem;
-            font-weight: 500;
-        }
-
-        /* Section Titles */
-        .section-title {
-            text-align: center;
-            margin-bottom: 2rem;
-        }
-
-        .section-title h1 {
-            font-size: 1.875rem;
-            font-weight: bold;
-            margin-bottom: 0.5rem;
-        }
-
-        .section-title p {
-            color: var(--muted-foreground);
-        }
-
-        /* Home Section Styles */
-        .home-section {
-            display: grid;
-            gap: 2rem;
-        }
-
-        .featured-section {
-            background: var(--card);
-            border-radius: 1rem;
-            padding: 1.5rem;
-            border: 1px solid var(--border);
-        }
-
-        .section-header {
-            font-size: 1.25rem;
-            font-weight: 600;
-            margin-bottom: 1rem;
-        }
-
-        .shoe-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 1rem;
-        }
-
-        .shoe-card {
-            background: var(--background);
-            border-radius: 0.75rem;
-            padding: 1rem;
-            border: 1px solid var(--border);
-            transition: all 0.2s;
-            cursor: pointer;
-        }
-
-        .shoe-card:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-        }
-
-        .shoe-image {
-            width: 100%;
-            height: 120px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            border-radius: 0.5rem;
-            margin-bottom: 0.75rem;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-size: 0.875rem;
-        }
-
-        .shoe-name {
-            font-weight: 600;
-            margin-bottom: 0.25rem;
-        }
-
-        .shoe-price {
-            color: var(--muted-foreground);
-            font-size: 0.875rem;
-        }
-
-        .favorite-btn {
-            position: absolute;
-            top: 0.5rem;
-            right: 0.5rem;
-            background: white;
-            border: none;
-            border-radius: 50%;
-            width: 2rem;
-            height: 2rem;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-            transition: all 0.2s;
-        }
-
-        .favorite-btn:hover {
-            transform: scale(1.1);
-        }
-
-        .favorite-btn.favorited {
-            background: #ff4757;
-            color: white;
-        }
-
-        .shoe-card {
-            position: relative;
-        }
-
-        /* Filter Section Styles (existing) */
-        .filter-section {
-            margin-bottom: 1rem;
-        }
-
-        .filter-button {
-            width: 100%;
-            padding: 1rem;
-            background-color: var(--filter-button);
-            border: 1px solid var(--filter-button-border);
-            border-radius: 0.75rem;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            cursor: pointer;
-            transition: all 0.2s ease-in-out;
-            font-size: 1.125rem;
-            font-weight: 500;
-        }
-
-        .filter-button:hover {
-            background-color: var(--filter-button-hover);
-            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-        }
-
-        .filter-button.active {
-            background-color: var(--accent);
-            border-color: var(--primary);
-        }
-
-        .filter-button-content {
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-        }
-
-        .filter-icon {
-            width: 1.25rem;
-            height: 1.25rem;
-            color: var(--muted-foreground);
-            transition: color 0.2s;
-        }
-
-        .filter-button:hover .filter-icon {
-            color: var(--foreground);
-        }
-
-        .chevron {
-            width: 1.25rem;
-            height: 1.25rem;
-            color: var(--muted-foreground);
-            transition: transform 0.2s;
-        }
-
-        .chevron.up {
-            transform: rotate(180deg);
-        }
-
-        .filter-panel {
-            background-color: var(--filter-panel);
-            border: 1px solid var(--filter-panel-border);
-            border-radius: 0.75rem;
-            padding: 1.5rem;
-            margin-top: 0.5rem;
-            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
-            display: none;
-            animation: slideDown 0.2s ease-out;
-        }
-
-        .filter-panel.active {
-            display: block;
-        }
-
-        @keyframes slideDown {
-            from {
-                opacity: 0;
-                transform: translateY(-10px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        .filter-title {
-            font-size: 1.125rem;
-            font-weight: 600;
-            margin-bottom: 1rem;
-        }
-
-        .checkbox-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 0.75rem;
-        }
-
-        .checkbox-item {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            padding: 0.5rem;
-            border-radius: 0.375rem;
-            cursor: pointer;
-            transition: background-color 0.2s;
-        }
-
-        .checkbox-item:hover {
-            background-color: var(--accent);
-        }
-
-        .checkbox-item input {
-            width: 1rem;
-            height: 1rem;
-            accent-color: var(--primary);
-        }
-
-        .checkbox-item label {
-            font-size: 0.875rem;
-            cursor: pointer;
-        }
-
-        /* Color Filter Styles */
-        .color-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
-            gap: 0.75rem;
-        }
-
-        .color-item {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 0.25rem;
-            cursor: pointer;
-        }
-
-        .color-circle {
-            width: 2rem;
-            height: 2rem;
-            border-radius: 50%;
-            border: 2px solid var(--border);
-            transition: all 0.2s;
-            position: relative;
-        }
-
-        .color-circle:hover {
-            transform: scale(1.05);
-        }
-
-        .color-circle.selected {
-            border-color: var(--primary);
-            transform: scale(1.1);
-        }
-
-        .color-circle.selected::after {
-            content: '';
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 0.5rem;
-            height: 0.5rem;
-            background-color: var(--primary);
-            border-radius: 50%;
-        }
-
-        .color-name {
-            font-size: 0.75rem;
-            color: var(--muted-foreground);
-            text-align: center;
-        }
-
-        /* Size Filter Styles */
-        .gender-buttons {
-            display: flex;
-            gap: 1rem;
-            margin-bottom: 1.5rem;
-        }
-
-        .gender-button {
-            padding: 0.5rem 1rem;
-            border-radius: 0.5rem;
-            border: none;
-            cursor: pointer;
-            font-weight: 500;
-            transition: all 0.2s;
-        }
-
-        .gender-button.active {
-            background-color: var(--primary);
-            color: var(--primary-foreground);
-        }
-
-        .gender-button:not(.active) {
-            background-color: var(--secondary);
-            color: var(--secondary-foreground);
-        }
-
-        .gender-button:not(.active):hover {
-            background-color: var(--accent);
-        }
-
-        .size-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(48px, 1fr));
-            gap: 0.5rem;
-        }
-
-        .size-button {
-            width: 3rem;
-            height: 3rem;
-            border: 1px solid var(--border);
-            border-radius: 0.5rem;
-            background-color: var(--background);
-            color: var(--foreground);
-            font-size: 0.875rem;
-            font-weight: 500;
-            cursor: pointer;
-            transition: all 0.2s;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .size-button:hover {
-            background-color: var(--accent);
-        }
-
-        .size-button.selected {
-            background-color: var(--primary);
-            color: var(--primary-foreground);
-            border-color: var(--primary);
-        }
-
-        /* Price Filter Styles */
-        .price-container {
-            padding: 1rem 0;
-        }
-
-        .price-labels {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 0.5rem;
-            font-size: 0.875rem;
-            color: var(--muted-foreground);
-        }
-
-        .slider-container {
-            position: relative;
-            height: 1.5rem;
-            margin-bottom: 1.5rem;
-        }
-
-        .slider-track {
-            position: absolute;
-            top: 50%;
-            transform: translateY(-50%);
-            width: 100%;
-            height: 0.5rem;
-            background-color: var(--price-track);
-            border-radius: 9999px;
-        }
-
-        .slider-range {
-            position: absolute;
-            top: 50%;
-            transform: translateY(-50%);
-            height: 0.5rem;
-            background-color: var(--price-thumb);
-            border-radius: 9999px;
-        }
-
-        .slider-input {
-            position: absolute;
-            top: 50%;
-            transform: translateY(-50%);
-            width: 100%;
-            height: 1.5rem;
-            background: transparent;
-            appearance: none;
-            cursor: pointer;
-        }
-
-        .slider-input::-webkit-slider-thumb {
-            appearance: none;
-            width: 20px;
-            height: 20px;
-            border-radius: 50%;
-            background: var(--price-thumb);
-            cursor: pointer;
-            border: 2px solid var(--background);
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-        }
-
-        .slider-input::-moz-range-thumb {
-            width: 20px;
-            height: 20px;
-            border-radius: 50%;
-            background: var(--price-thumb);
-            cursor: pointer;
-            border: 2px solid var(--background);
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-        }
-
-        .price-values {
-            display: flex;
-            justify-content: space-between;
-        }
-
-        .price-value {
-            text-align: center;
-        }
-
-        .price-label {
-            font-size: 0.875rem;
-            color: var(--muted-foreground);
-            margin-bottom: 0.25rem;
-        }
-
-        .price-amount {
-            font-size: 1.125rem;
-            font-weight: 600;
-        }
-
-        /* Favorites Section */
-        .empty-state {
-            text-align: center;
-            padding: 4rem 2rem;
-            color: var(--muted-foreground);
-        }
-
-        .empty-state-icon {
-            width: 4rem;
-            height: 4rem;
-            margin: 0 auto 1rem;
-            opacity: 0.5;
-        }
-
-        /* Settings Section */
-        .settings-grid {
-            display: grid;
-            gap: 1rem;
-        }
-
-        .settings-item {
-            background: var(--card);
-            border: 1px solid var(--border);
-            border-radius: 0.75rem;
-            padding: 1rem;
-            cursor: pointer;
-            transition: all 0.2s;
-        }
-
-        .settings-item:hover {
-            background: var(--accent);
-        }
-
-        .settings-item-title {
-            font-weight: 600;
-            margin-bottom: 0.25rem;
-        }
-
-        .settings-item-desc {
-            font-size: 0.875rem;
-            color: var(--muted-foreground);
-        }
-
-        .hidden {
-            display: none !important;
-        }
-
-        @media (max-width: 768px) {
-            .checkbox-grid {
-                grid-template-columns: repeat(2, 1fr);
-            }
-            
-            .color-grid {
-                grid-template-columns: repeat(4, 1fr);
-            }
-            
-            .size-grid {
-                grid-template-columns: repeat(5, 1fr);
-            }
-
-            .shoe-grid {
-                grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-            }
-        }
+            --accent: hsl(220, 13%, 96%);
+            --blue: hsl(217, 91%, 60%);
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: system-ui, sans-serif; background: var(--bg); color: var(--text); padding-bottom: 80px; }
+        .app { max-width: 1024px; margin: 0 auto; min-height: 100vh; }
+        .section { display: none; padding: 1rem; }
+        .section.active { display: block; }
+        
+        /* Bottom Nav */
+        .nav { position: fixed; bottom: 0; left: 0; right: 0; background: var(--card); border-top: 1px solid var(--border); padding: 0.5rem 0; z-index: 100; }
+        .nav-container { max-width: 1024px; margin: 0 auto; display: flex; justify-content: space-around; }
+        .nav-item { display: flex; flex-direction: column; align-items: center; padding: 0.5rem; cursor: pointer; color: var(--muted); }
+        .nav-item.active { color: var(--text); }
+        .nav-icon { width: 24px; height: 24px; margin-bottom: 0.25rem; }
+        .nav-label { font-size: 0.75rem; font-weight: 500; }
+        
+        /* Cards & Layout */
+        .card { background: var(--card); border: 1px solid var(--border); border-radius: 1rem; padding: 1.5rem; margin-bottom: 1.5rem; }
+        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; }
+        .shoe-card { background: var(--card); border: 1px solid var(--border); border-radius: 0.75rem; padding: 1rem; cursor: pointer; transition: transform 0.2s; position: relative; }
+        .shoe-card:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
+        .shoe-img { width: 100%; height: 120px; background: linear-gradient(135deg, #667eea, #764ba2); border-radius: 0.5rem; margin-bottom: 0.75rem; display: flex; align-items: center; justify-content: center; color: white; font-size: 0.875rem; background-size: cover; background-position: center; }
+        .shoe-name { font-weight: 600; margin-bottom: 0.25rem; }
+        .shoe-brand { color: var(--muted); font-size: 0.875rem; margin-bottom: 0.25rem; }
+        .shoe-price { color: var(--text); font-weight: 600; }
+        .fav-btn { position: absolute; top: 0.5rem; right: 0.5rem; background: white; border: none; border-radius: 50%; width: 2rem; height: 2rem; cursor: pointer; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+        .fav-btn.favorited { background: #ff4757; color: white; }
+        
+        /* Filter Styles */
+        .filter-btn { width: 100%; padding: 1rem; background: var(--card); border: 1px solid var(--border); border-radius: 0.75rem; display: flex; justify-content: space-between; align-items: center; cursor: pointer; margin-bottom: 0.5rem; }
+        .filter-btn:hover { background: var(--accent); }
+        .filter-panel { background: var(--card); border: 1px solid var(--border); border-radius: 0.75rem; padding: 1.5rem; margin-bottom: 1rem; display: none; }
+        .filter-panel.active { display: block; }
+        .checkbox-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 0.5rem; }
+        .checkbox-item { display: flex; align-items: center; gap: 0.5rem; padding: 0.5rem; border-radius: 0.375rem; cursor: pointer; }
+        .checkbox-item:hover { background: var(--accent); }
+        .color-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(60px, 1fr)); gap: 0.5rem; }
+        .color-item { display: flex; flex-direction: column; align-items: center; cursor: pointer; }
+        .color-circle { width: 2rem; height: 2rem; border-radius: 50%; border: 2px solid var(--border); transition: all 0.2s; }
+        .color-circle.selected { border-color: var(--text); transform: scale(1.1); }
+        .size-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(48px, 1fr)); gap: 0.5rem; }
+        .size-btn { width: 3rem; height: 3rem; border: 1px solid var(--border); border-radius: 0.5rem; background: var(--card); cursor: pointer; }
+        .size-btn.selected { background: var(--text); color: white; }
+        .gender-btns { display: flex; gap: 1rem; margin-bottom: 1rem; }
+        .gender-btn { padding: 0.5rem 1rem; border: none; border-radius: 0.5rem; cursor: pointer; background: var(--accent); }
+        .gender-btn.active { background: var(--text); color: white; }
+        .search-btn { position: fixed; bottom: 90px; left: 50%; transform: translateX(-50%); background: var(--blue); color: white; padding: 1rem 2rem; border: none; border-radius: 2rem; font-weight: 600; cursor: pointer; display: none; z-index: 50; }
+        .slider { width: 100%; height: 0.5rem; background: var(--border); border-radius: 1rem; appearance: none; }
+        .empty-state { text-align: center; padding: 2rem; color: var(--muted); }
+        h1 { font-size: 1.875rem; font-weight: bold; margin-bottom: 0.5rem; text-align: center; }
+        h2 { font-size: 1.25rem; font-weight: 600; margin-bottom: 1rem; }
+        h3 { font-size: 1.125rem; font-weight: 600; margin-bottom: 1rem; }
+        p { color: var(--muted); text-align: center; margin-bottom: 2rem; }
+        .settings-item { display: flex; justify-content: space-between; align-items: center; padding: 1rem; border-bottom: 1px solid var(--border); cursor: pointer; }
+        .settings-item:hover { background: var(--accent); }
+        .recently-viewed { overflow-x: auto; }
+        .recently-viewed .grid { display: flex; gap: 1rem; padding-bottom: 1rem; }
+        .recently-viewed .shoe-card { min-width: 200px; }
     </style>
 </head>
 <body>
-    <div class="app-container">
+    <div class="app">
         <!-- Home Section -->
-        <div id="home" class="content-section active">
-            <div class="section-title">
-                <h1>Welcome to SoleStore</h1>
-                <p>Discover your perfect pair</p>
+        <div id="home" class="section active">
+            <h1>Steppr</h1>
+            <p>Step into style with premium sneakers</p>
+            
+            <div class="card">
+                <h2>Trending Now</h2>
+                <div class="grid" id="trending-grid"></div>
             </div>
             
-            <div class="home-section">
-                <div class="featured-section">
-                    <h2 class="section-header">Recommended for You</h2>
-                    <div class="shoe-grid">
-                        <div class="shoe-card" data-shoe-id="1">
-                            <button class="favorite-btn" onclick="toggleFavorite(1)">
-                                <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24">
-                                    <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
-                                </svg>
-                            </button>
-                            <div class="shoe-image">Nike Air Max 270</div>
-                            <div class="shoe-name">Nike Air Max 270</div>
-                            <div class="shoe-price">$150</div>
-                        </div>
-                        <div class="shoe-card" data-shoe-id="2">
-                            <button class="favorite-btn" onclick="toggleFavorite(2)">
-                                <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24">
-                                    <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
-                                </svg>
-                            </button>
-                            <div class="shoe-image">Adidas UltraBoost</div>
-                            <div class="shoe-name">Adidas UltraBoost 22</div>
-                            <div class="shoe-price">$180</div>
-                        </div>
-                        <div class="shoe-card" data-shoe-id="3">
-                            <button class="favorite-btn" onclick="toggleFavorite(3)">
-                                <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24">
-                                    <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
-                                </svg>
-                            </button>
-                            <div class="shoe-image">Jordan 1 Retro</div>
-                            <div class="shoe-name">Jordan 1 Retro High</div>
-                            <div class="shoe-price">$170</div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="featured-section">
-                    <h2 class="section-header">Featured Drops</h2>
-                    <div class="shoe-grid">
-                        <div class="shoe-card" data-shoe-id="4">
-                            <button class="favorite-btn" onclick="toggleFavorite(4)">
-                                <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24">
-                                    <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
-                                </svg>
-                            </button>
-                            <div class="shoe-image">Yeezy Boost 350</div>
-                            <div class="shoe-name">Yeezy Boost 350 V2</div>
-                            <div class="shoe-price">$220</div>
-                        </div>
-                        <div class="shoe-card" data-shoe-id="5">
-                            <button class="favorite-btn" onclick="toggleFavorite(5)">
-                                <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24">
-                                    <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
-                                </svg>
-                            </button>
-                            <div class="shoe-image">New Balance 990</div>
-                            <div class="shoe-name">New Balance 990v5</div>
-                            <div class="shoe-price">$175</div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="featured-section">
-                    <h2 class="section-header">Trending Styles</h2>
-                    <div class="shoe-grid">
-                        <div class="shoe-card" data-shoe-id="6">
-                            <button class="favorite-btn" onclick="toggleFavorite(6)">
-                                <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24">
-                                    <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
-                                </svg>
-                            </button>
-                            <div class="shoe-image">Vans Old Skool</div>
-                            <div class="shoe-name">Vans Old Skool</div>
-                            <div class="shoe-price">$65</div>
-                        </div>
-                        <div class="shoe-card" data-shoe-id="7">
-                            <button class="favorite-btn" onclick="toggleFavorite(7)">
-                                <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24">
-                                    <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
-                                </svg>
-                            </button>
-                            <div class="shoe-image">Converse Chuck 70</div>
-                            <div class="shoe-name">Converse Chuck 70</div>
-                            <div class="shoe-price">$85</div>
-                        </div>
-                        <div class="shoe-card" data-shoe-id="8">
-                            <button class="favorite-btn" onclick="toggleFavorite(8)">
-                                <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24">
-                                    <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
-                                </svg>
-                            </button>
-                            <div class="shoe-image">Puma Suede Classic</div>
-                            <div class="shoe-name">Puma Suede Classic</div>
-                            <div class="shoe-price">$70</div>
-                        </div>
+            <div class="card">
+                <h2>New Releases</h2>
+                <div class="grid" id="releases-grid"></div>
+            </div>
+            
+            <div class="card">
+                <h2>Style Collections</h2>
+                <div class="grid" id="collections-grid"></div>
+            </div>
+            
+            <div class="card">
+                <h2>Recently Viewed</h2>
+                <div class="recently-viewed">
+                    <div class="grid" id="recent-grid">
+                        <div class="empty-state">View some shoes to see them here!</div>
                     </div>
                 </div>
             </div>
         </div>
 
         <!-- Search Section -->
-        <div id="search" class="content-section">
-            <div class="section-title">
-                <h1>Shoe Filters</h1>
-                <p>Find your perfect pair</p>
+        <div id="search" class="section">
+            <h1>Find Your Perfect Pair</h1>
+            <p>Use filters to discover shoes you'll love</p>
+            
+            <div class="filter-btn" onclick="toggleFilter('brands')">
+                <span>🏷️ Brands</span>
+                <span class="chevron">▼</span>
             </div>
-
-            <!-- Brands Filter -->
-            <div class="filter-section">
-                <button class="filter-button" onclick="toggleFilter('brands')">
-                    <div class="filter-button-content">
-                        <svg class="filter-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z"></path>
-                        </svg>
-                        <span>Brands</span>
-                    </div>
-                    <svg class="chevron" id="brands-chevron" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
-                    </svg>
-                </button>
-                <div class="filter-panel" id="brands-panel">
-                    <h3 class="filter-title">Select Brands</h3>
-                    <div class="checkbox-grid">
-                        <div class="checkbox-item">
-                            <input type="checkbox" id="nike" name="brands" value="nike">
-                            <label for="nike">Nike</label>
-                        </div>
-                        <div class="checkbox-item">
-                            <input type="checkbox" id="adidas" name="brands" value="adidas">
-                            <label for="adidas">Adidas</label>
-                        </div>
-                        <div class="checkbox-item">
-                            <input type="checkbox" id="jordan" name="brands" value="jordan">
-                            <label for="jordan">Jordan</label>
-                        </div>
-                        <div class="checkbox-item">
-                            <input type="checkbox" id="puma" name="brands" value="puma">
-                            <label for="puma">Puma</label>
-                        </div>
-                        <div class="checkbox-item">
-                            <input type="checkbox" id="newbalance" name="brands" value="newbalance">
-                            <label for="newbalance">New Balance</label>
-                        </div>
-                        <div class="checkbox-item">
-                            <input type="checkbox" id="vans" name="brands" value="vans">
-                            <label for="vans">Vans</label>
-                        </div>
-                        <div class="checkbox-item">
-                            <input type="checkbox" id="converse" name="brands" value="converse">
-                            <label for="converse">Converse</label>
-                        </div>
-                        <div class="checkbox-item">
-                            <input type="checkbox" id="reebok" name="brands" value="reebok">
-                            <label for="reebok">Reebok</label>
-                        </div>
-                        <div class="checkbox-item">
-                            <input type="checkbox" id="asics" name="brands" value="asics">
-                            <label for="asics">ASICS</label>
-                        </div>
-                        <div class="checkbox-item">
-                            <input type="checkbox" id="skechers" name="brands" value="skechers">
-                            <label for="skechers">Skechers</label>
-                        </div>
-                        <div class="checkbox-item">
-                            <input type="checkbox" id="underarmour" name="brands" value="underarmour">
-                            <label for="underarmour">Under Armour</label>
-                        </div>
-                        <div class="checkbox-item">
-                            <input type="checkbox" id="fila" name="brands" value="fila">
-                            <label for="fila">Fila</label>
-                        </div>
-                    </div>
+            <div id="brands-panel" class="filter-panel">
+                <h3>Select Brands</h3>
+                <div class="checkbox-grid" id="brands-list"></div>
+            </div>
+            
+            <div class="filter-btn" onclick="toggleFilter('colors')">
+                <span>🎨 Colors</span>
+                <span class="chevron">▼</span>
+            </div>
+            <div id="colors-panel" class="filter-panel">
+                <h3>Select Colors</h3>
+                <div class="color-grid" id="colors-list"></div>
+            </div>
+            
+            <div class="filter-btn" onclick="toggleFilter('sizes')">
+                <span>📏 Sizes</span>
+                <span class="chevron">▼</span>
+            </div>
+            <div id="sizes-panel" class="filter-panel">
+                <h3>Select Size</h3>
+                <div class="gender-btns">
+                    <button class="gender-btn active" onclick="setGender('men')">Men's</button>
+                    <button class="gender-btn" onclick="setGender('women')">Women's</button>
+                </div>
+                <div class="size-grid" id="sizes-list"></div>
+            </div>
+            
+            <div class="filter-btn" onclick="toggleFilter('price')">
+                <span>💰 Price Range</span>
+                <span class="chevron">▼</span>
+            </div>
+            <div id="price-panel" class="filter-panel">
+                <h3>Price Range</h3>
+                <input type="range" class="slider" min="0" max="1000" value="500" id="price-slider">
+                <div style="display: flex; justify-content: space-between; margin-top: 0.5rem;">
+                    <span>$0</span>
+                    <span id="price-value">$500</span>
+                    <span>$1000</span>
                 </div>
             </div>
-
-            <!-- Colors Filter -->
-            <div class="filter-section">
-                <button class="filter-button" onclick="toggleFilter('colors')">
-                    <div class="filter-button-content">
-                        <svg class="filter-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zM7 3H5a2 2 0 00-2 2v12a4 4 0 004 4h2a2 2 0 002-2V5a2 2 0 00-2-2z"></path>
-                        </svg>
-                        <span>Colors</span>
-                    </div>
-                    <svg class="chevron" id="colors-chevron" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
-                    </svg>
-                </button>
-                <div class="filter-panel" id="colors-panel">
-                    <h3 class="filter-title">Select Colors</h3>
-                    <div class="color-grid">
-                        <div class="color-item" onclick="toggleColor('black')">
-                            <div class="color-circle" id="color-black" style="background-color: #000000;"></div>
-                            <span class="color-name">Black</span>
-                        </div>
-                        <div class="color-item" onclick="toggleColor('white')">
-                            <div class="color-circle" id="color-white" style="background-color: #FFFFFF; border-color: #ccc;"></div>
-                            <span class="color-name">White</span>
-                        </div>
-                        <div class="color-item" onclick="toggleColor('red')">
-                            <div class="color-circle" id="color-red" style="background-color: #DC2626;"></div>
-                            <span class="color-name">Red</span>
-                        </div>
-                        <div class="color-item" onclick="toggleColor('blue')">
-                            <div class="color-circle" id="color-blue" style="background-color: #2563EB;"></div>
-                            <span class="color-name">Blue</span>
-                        </div>
-                        <div class="color-item" onclick="toggleColor('green')">
-                            <div class="color-circle" id="color-green" style="background-color: #16A34A;"></div>
-                            <span class="color-name">Green</span>
-                        </div>
-                        <div class="color-item" onclick="toggleColor('yellow')">
-                            <div class="color-circle" id="color-yellow" style="background-color: #EAB308;"></div>
-                            <span class="color-name">Yellow</span>
-                        </div>
-                        <div class="color-item" onclick="toggleColor('purple')">
-                            <div class="color-circle" id="color-purple" style="background-color: #9333EA;"></div>
-                            <span class="color-name">Purple</span>
-                        </div>
-                        <div class="color-item" onclick="toggleColor('pink')">
-                            <div class="color-circle" id="color-pink" style="background-color: #EC4899;"></div>
-                            <span class="color-name">Pink</span>
-                        </div>
-                        <div class="color-item" onclick="toggleColor('orange')">
-                            <div class="color-circle" id="color-orange" style="background-color: #EA580C;"></div>
-                            <span class="color-name">Orange</span>
-                        </div>
-                        <div class="color-item" onclick="toggleColor('gray')">
-                            <div class="color-circle" id="color-gray" style="background-color: #6B7280;"></div>
-                            <span class="color-name">Gray</span>
-                        </div>
-                        <div class="color-item" onclick="toggleColor('brown')">
-                            <div class="color-circle" id="color-brown" style="background-color: #A16207;"></div>
-                            <span class="color-name">Brown</span>
-                        </div>
-                        <div class="color-item" onclick="toggleColor('navy')">
-                            <div class="color-circle" id="color-navy" style="background-color: #1E3A8A;"></div>
-                            <span class="color-name">Navy</span>
-                        </div>
-                        <div class="color-item" onclick="toggleColor('beige')">
-                            <div class="color-circle" id="color-beige" style="background-color: #F5F5DC;"></div>
-                            <span class="color-name">Beige</span>
-                        </div>
-                        <div class="color-item" onclick="toggleColor('maroon')">
-                            <div class="color-circle" id="color-maroon" style="background-color: #7F1D1D;"></div>
-                            <span class="color-name">Maroon</span>
-                        </div>
-                        <div class="color-item" onclick="toggleColor('teal')">
-                            <div class="color-circle" id="color-teal" style="background-color: #0F766E;"></div>
-                            <span class="color-name">Teal</span>
-                        </div>
-                        <div class="color-item" onclick="toggleColor('silver')">
-                            <div class="color-circle" id="color-silver" style="background-color: #C0C0C0;"></div>
-                            <span class="color-name">Silver</span>
-                        </div>
-                    </div>
-                </div>
+            
+            <div id="search-results" style="display: none;">
+                <h2>Search Results</h2>
+                <div class="grid" id="results-grid"></div>
             </div>
-
-            <!-- Sizes Filter -->
-            <div class="filter-section">
-                <button class="filter-button" onclick="toggleFilter('sizes')">
-                    <div class="filter-button-content">
-                        <svg class="filter-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21l3-3-3-3m4 0h10"></path>
-                        </svg>
-                        <span>Sizes</span>
-                    </div>
-                    <svg class="chevron" id="sizes-chevron" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
-                    </svg>
-                </button>
-                <div class="filter-panel" id="sizes-panel">
-                    <h3 class="filter-title">Select Sizes</h3>
-                    <div class="gender-buttons">
-                        <button class="gender-button active" id="mens-btn" onclick="setGender('mens')">Men's Sizes</button>
-                        <button class="gender-button" id="womens-btn" onclick="setGender('womens')">Women's Sizes</button>
-                    </div>
-                    <div class="size-grid" id="mens-sizes">
-                        <button class="size-button" onclick="toggleSize('7')" data-size="7">7</button>
-                        <button class="size-button" onclick="toggleSize('7.5')" data-size="7.5">7.5</button>
-                        <button class="size-button" onclick="toggleSize('8')" data-size="8">8</button>
-                        <button class="size-button" onclick="toggleSize('8.5')" data-size="8.5">8.5</button>
-                        <button class="size-button" onclick="toggleSize('9')" data-size="9">9</button>
-                        <button class="size-button" onclick="toggleSize('9.5')" data-size="9.5">9.5</button>
-                        <button class="size-button" onclick="toggleSize('10')" data-size="10">10</button>
-                        <button class="size-button" onclick="toggleSize('10.5')" data-size="10.5">10.5</button>
-                        <button class="size-button" onclick="toggleSize('11')" data-size="11">11</button>
-                        <button class="size-button" onclick="toggleSize('11.5')" data-size="11.5">11.5</button>
-                        <button class="size-button" onclick="toggleSize('12')" data-size="12">12</button>
-                        <button class="size-button" onclick="toggleSize('13')" data-size="13">13</button>
-                        <button class="size-button" onclick="toggleSize('14')" data-size="14">14</button>
-                        <button class="size-button" onclick="toggleSize('15')" data-size="15">15</button>
-                    </div>
-                    <div class="size-grid hidden" id="womens-sizes">
-                        <button class="size-button" onclick="toggleSize('5')" data-size="5">5</button>
-                        <button class="size-button" onclick="toggleSize('5.5')" data-size="5.5">5.5</button>
-                        <button class="size-button" onclick="toggleSize('6')" data-size="6">6</button>
-                        <button class="size-button" onclick="toggleSize('6.5')" data-size="6.5">6.5</button>
-                        <button class="size-button" onclick="toggleSize('7')" data-size="7">7</button>
-                        <button class="size-button" onclick="toggleSize('7.5')" data-size="7.5">7.5</button>
-                        <button class="size-button" onclick="toggleSize('8')" data-size="8">8</button>
-                        <button class="size-button" onclick="toggleSize('8.5')" data-size="8.5">8.5</button>
-                        <button class="size-button" onclick="toggleSize('9')" data-size="9">9</button>
-                        <button class="size-button" onclick="toggleSize('9.5')" data-size="9.5">9.5</button>
-                        <button class="size-button" onclick="toggleSize('10')" data-size="10">10</button>
-                        <button class="size-button" onclick="toggleSize('10.5')" data-size="10.5">10.5</button>
-                        <button class="size-button" onclick="toggleSize('11')" data-size="11">11</button>
-                        <button class="size-button" onclick="toggleSize('12')" data-size="12">12</button>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Materials Filter -->
-            <div class="filter-section">
-                <button class="filter-button" onclick="toggleFilter('materials')">
-                    <div class="filter-button-content">
-                        <svg class="filter-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z"></path>
-                        </svg>
-                        <span>Materials</span>
-                    </div>
-                    <svg class="chevron" id="materials-chevron" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
-                    </svg>
-                </button>
-                <div class="filter-panel" id="materials-panel">
-                    <h3 class="filter-title">Select Materials</h3>
-                    <div class="checkbox-grid">
-                        <div class="checkbox-item">
-                            <input type="checkbox" id="leather" name="materials" value="leather">
-                            <label for="leather">Leather</label>
-                        </div>
-                        <div class="checkbox-item">
-                            <input type="checkbox" id="canvas" name="materials" value="canvas">
-                            <label for="canvas">Canvas</label>
-                        </div>
-                        <div class="checkbox-item">
-                            <input type="checkbox" id="mesh" name="materials" value="mesh">
-                            <label for="mesh">Mesh</label>
-                        </div>
-                        <div class="checkbox-item">
-                            <input type="checkbox" id="suede" name="materials" value="suede">
-                            <label for="suede">Suede</label>
-                        </div>
-                        <div class="checkbox-item">
-                            <input type="checkbox" id="synthetic" name="materials" value="synthetic">
-                            <label for="synthetic">Synthetic</label>
-                        </div>
-                        <div class="checkbox-item">
-                            <input type="checkbox" id="knit" name="materials" value="knit">
-                            <label for="knit">Knit</label>
-                        </div>
-                        <div class="checkbox-item">
-                            <input type="checkbox" id="rubber" name="materials" value="rubber">
-                            <label for="rubber">Rubber</label>
-                        </div>
-                        <div class="checkbox-item">
-                            <input type="checkbox" id="patent" name="materials" value="patent">
-                            <label for="patent">Patent Leather</label>
-                        </div>
-                        <div class="checkbox-item">
-                            <input type="checkbox" id="nubuck" name="materials" value="nubuck">
-                            <label for="nubuck">Nubuck</label>
-                        </div>
-                        <div class="checkbox-item">
-                            <input type="checkbox" id="textile" name="materials" value="textile">
-                            <label for="textile">Textile</label>
-                        </div>
-                        <div class="checkbox-item">
-                            <input type="checkbox" id="flyknit" name="materials" value="flyknit">
-                            <label for="flyknit">Flyknit</label>
-                        </div>
-                        <div class="checkbox-item">
-                            <input type="checkbox" id="primeknit" name="materials" value="primeknit">
-                            <label for="primeknit">Primeknit</label>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Price Filter -->
-            <div class="filter-section">
-                <button class="filter-button" onclick="toggleFilter('price')">
-                    <div class="filter-button-content">
-                        <svg class="filter-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1"></path>
-                        </svg>
-                        <span>Price</span>
-                    </div>
-                    <svg class="chevron" id="price-chevron" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
-                    </svg>
-                </button>
-                <div class="filter-panel" id="price-panel">
-                    <h3 class="filter-title">Price Range</h3>
-                    <div class="price-container">
-                        <div class="price-labels">
-                            <span>$0</span>
-                            <span>$1000</span>
-                        </div>
-                        <div class="slider-container">
-                            <div class="slider-track"></div>
-                            <div class="slider-range" id="slider-range"></div>
-                            <input 
-                                type="range" 
-                                class="slider-input" 
-                                id="min-price" 
-                                min="0" 
-                                max="1000" 
-                                value="0" 
-                                step="10"
-                                oninput="updatePriceRange()"
-                            >
-                            <input 
-                                type="range" 
-                                class="slider-input" 
-                                id="max-price" 
-                                min="0" 
-                                max="1000" 
-                                value="1000" 
-                                step="10"
-                                oninput="updatePriceRange()"
-                            >
-                        </div>
-                        <div class="price-values">
-                            <div class="price-value">
-                                <div class="price-label">Min</div>
-                                <div class="price-amount" id="min-value">$0</div>
-                            </div>
-                            <div class="price-value">
-                                <div class="price-label">Max</div>
-                                <div class="price-amount" id="max-value">$1000</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Sports Filter -->
-            <div class="filter-section">
-                <button class="filter-button" onclick="toggleFilter('sports')">
-                    <div class="filter-button-content">
-                        <svg class="filter-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
-                        </svg>
-                        <span>Sports</span>
-                    </div>
-                    <svg class="chevron" id="sports-chevron" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
-                    </svg>
-                </button>
-                <div class="filter-panel" id="sports-panel">
-                    <h3 class="filter-title">Select Sports</h3>
-                    <div class="checkbox-grid">
-                        <div class="checkbox-item">
-                            <input type="checkbox" id="running" name="sports" value="running">
-                            <label for="running">Running</label>
-                        </div>
-                        <div class="checkbox-item">
-                            <input type="checkbox" id="basketball" name="sports" value="basketball">
-                            <label for="basketball">Basketball</label>
-                        </div>
-                        <div class="checkbox-item">
-                            <input type="checkbox" id="soccer" name="sports" value="soccer">
-                            <label for="soccer">Soccer</label>
-                        </div>
-                        <div class="checkbox-item">
-                            <input type="checkbox" id="football" name="sports" value="football">
-                            <label for="football">Football</label>
-                        </div>
-                        <div class="checkbox-item">
-                            <input type="checkbox" id="tennis" name="sports" value="tennis">
-                            <label for="tennis">Tennis</label>
-                        </div>
-                        <div class="checkbox-item">
-                            <input type="checkbox" id="baseball" name="sports" value="baseball">
-                            <label for="baseball">Baseball</label>
-                        </div>
-                        <div class="checkbox-item">
-                            <input type="checkbox" id="skateboarding" name="sports" value="skateboarding">
-                            <label for="skateboarding">Skateboarding</label>
-                        </div>
-                        <div class="checkbox-item">
-                            <input type="checkbox" id="training" name="sports" value="training">
-                            <label for="training">Training</label>
-                        </div>
-                        <div class="checkbox-item">
-                            <input type="checkbox" id="walking" name="sports" value="walking">
-                            <label for="walking">Walking</label>
-                        </div>
-                        <div class="checkbox-item">
-                            <input type="checkbox" id="hiking" name="sports" value="hiking">
-                            <label for="hiking">Hiking</label>
-                        </div>
-                        <div class="checkbox-item">
-                            <input type="checkbox" id="golf" name="sports" value="golf">
-                            <label for="golf">Golf</label>
-                        </div>
-                        <div class="checkbox-item">
-                            <input type="checkbox" id="casual" name="sports" value="casual">
-                            <label for="casual">Casual</label>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            
+            <button class="search-btn" id="search-btn" onclick="performSearch()">Search Shoes</button>
         </div>
 
         <!-- Favorites Section -->
-        <div id="favorites" class="content-section">
-            <div class="section-title">
-                <h1>My Favorites</h1>
-                <p>Your wishlist</p>
-            </div>
-            
-            <div id="favorites-content">
-                <div class="empty-state">
-                    <svg class="empty-state-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path>
-                    </svg>
-                    <h3>No favorites yet</h3>
-                    <p>Start browsing and add shoes to your wishlist!</p>
-                </div>
+        <div id="favorites" class="section">
+            <h1>Your Favorites</h1>
+            <p>Shoes you've saved for later</p>
+            <div class="grid" id="favorites-grid">
+                <div class="empty-state">No favorites yet. Heart some shoes to see them here!</div>
             </div>
         </div>
 
         <!-- Settings Section -->
-        <div id="settings" class="content-section">
-            <div class="section-title">
-                <h1>Settings</h1>
-                <p>Manage your account</p>
-            </div>
+        <div id="settings" class="section">
+            <h1>Settings</h1>
+            <p>Manage your account and preferences</p>
             
-            <div class="settings-grid">
+            <div class="card">
                 <div class="settings-item">
-                    <div class="settings-item-title">My Orders</div>
-                    <div class="settings-item-desc">View your order history and track deliveries</div>
+                    <span>📦 My Orders</span>
+                    <span>→</span>
                 </div>
-                
                 <div class="settings-item">
-                    <div class="settings-item-title">Payment Information</div>
-                    <div class="settings-item-desc">Manage your payment methods and billing</div>
+                    <span>💳 Payment Methods</span>
+                    <span>→</span>
                 </div>
-                
                 <div class="settings-item">
-                    <div class="settings-item-title">Past Searches</div>
-                    <div class="settings-item-desc">Review your search history and saved filters</div>
+                    <span>🔍 Search History</span>
+                    <span>→</span>
                 </div>
-                
                 <div class="settings-item">
-                    <div class="settings-item-title">Account Settings</div>
-                    <div class="settings-item-desc">Update your profile and preferences</div>
+                    <span>👤 Account Settings</span>
+                    <span>→</span>
                 </div>
-                
                 <div class="settings-item">
-                    <div class="settings-item-title">Notifications</div>
-                    <div class="settings-item-desc">Manage your notification preferences</div>
+                    <span>🔔 Notifications</span>
+                    <span>→</span>
                 </div>
-                
                 <div class="settings-item">
-                    <div class="settings-item-title">Privacy & Security</div>
-                    <div class="settings-item-desc">Control your privacy settings and security</div>
-                </div>
-                
-                <div class="settings-item">
-                    <div class="settings-item-title">Help & Support</div>
-                    <div class="settings-item-desc">Get help or contact customer service</div>
-                </div>
-                
-                <div class="settings-item">
-                    <div class="settings-item-title">About</div>
-                    <div class="settings-item-desc">App information and legal terms</div>
+                    <span>❓ Help & Support</span>
+                    <span>→</span>
                 </div>
             </div>
         </div>
     </div>
 
     <!-- Bottom Navigation -->
-    <div class="bottom-nav">
+    <div class="nav">
         <div class="nav-container">
             <div class="nav-item active" onclick="switchSection('home')">
-                <svg class="nav-icon" fill="currentColor" viewBox="0 0 24 24">
-                    <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/>
-                </svg>
-                <span class="nav-label">Home</span>
+                <div class="nav-icon">🏠</div>
+                <div class="nav-label">Home</div>
             </div>
-            
             <div class="nav-item" onclick="switchSection('search')">
-                <svg class="nav-icon" fill="currentColor" viewBox="0 0 24 24">
-                    <path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/>
-                </svg>
-                <span class="nav-label">Search</span>
+                <div class="nav-icon">🔍</div>
+                <div class="nav-label">Search</div>
             </div>
-            
             <div class="nav-item" onclick="switchSection('favorites')">
-                <svg class="nav-icon" fill="currentColor" viewBox="0 0 24 24">
-                    <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
-                </svg>
-                <span class="nav-label">Favorites</span>
+                <div class="nav-icon">❤️</div>
+                <div class="nav-label">Favorites</div>
             </div>
-            
             <div class="nav-item" onclick="switchSection('settings')">
-                <svg class="nav-icon" fill="currentColor" viewBox="0 0 24 24">
-                    <path d="M19.14,12.94c0.04-0.3,0.06-0.61,0.06-0.94c0-0.32-0.02-0.64-0.07-0.94l2.03-1.58c0.18-0.14,0.23-0.41,0.12-0.61 l-1.92-3.32c-0.12-0.22-0.37-0.29-0.59-0.22l-2.39,0.96c-0.5-0.38-1.03-0.7-1.62-0.94L14.4,2.81c-0.04-0.24-0.24-0.41-0.48-0.41 h-3.84c-0.24,0-0.43,0.17-0.47,0.41L9.25,5.35C8.66,5.59,8.12,5.92,7.63,6.29L5.24,5.33c-0.22-0.08-0.47,0-0.59,0.22L2.74,8.87 C2.62,9.08,2.66,9.34,2.86,9.48l2.03,1.58C4.84,11.36,4.82,11.69,4.82,12s0.02,0.64,0.07,0.94l-2.03,1.58 c-0.18,0.14-0.23,0.41-0.12,0.61l1.92,3.32c0.12,0.22,0.37,0.29,0.59,0.22l2.39-0.96c0.5,0.38,1.03,0.7,1.62,0.94l0.36,2.54 c0.05,0.24,0.24,0.41,0.48,0.41h3.84c0.24,0,0.44-0.17,0.47-0.41l0.36-2.54c0.59-0.24,1.13-0.56,1.62-0.94l2.39,0.96 c0.22,0.08,0.47,0,0.59-0.22l1.92-3.32c0.12-0.22,0.07-0.47-0.12-0.61L19.14,12.94z M12,15.6c-1.98,0-3.6-1.62-3.6-3.6 s1.62-3.6,3.6-3.6s3.6,1.62,3.6,3.6S13.98,15.6,12,15.6z"/>
-                </svg>
-                <span class="nav-label">Settings</span>
+                <div class="nav-icon">⚙️</div>
+                <div class="nav-label">Settings</div>
             </div>
         </div>
     </div>
 
     <script>
-        // Navigation
-        function switchSection(sectionName) {
-            // Hide all sections
-            const sections = document.querySelectorAll('.content-section');
-            sections.forEach(section => section.classList.remove('active'));
-            
-            // Show selected section
-            document.getElementById(sectionName).classList.add('active');
-            
-            // Update nav items
-            const navItems = document.querySelectorAll('.nav-item');
-            navItems.forEach(item => item.classList.remove('active'));
-            event.currentTarget.classList.add('active');
+        // Shoe Database
+        const shoes = [
+            { id: 1, name: "Air Jordan 1 Retro High", brand: "Nike", price: 170, image: "https://images.unsplash.com/photo-1549298916-b41d501d3772?w=300", category: "trending", collection: "streetwear", color: "red", size: ["8", "9", "10", "11", "12"] },
+            { id: 2, name: "Air Force 1 '07", brand: "Nike", price: 90, image: "https://images.unsplash.com/photo-1606107557195-0e29a4b5b4aa?w=300", category: "trending", collection: "minimalist", color: "white", size: ["7", "8", "9", "10", "11"] },
+            { id: 3, name: "Stan Smith", brand: "Adidas", price: 80, image: "https://images.unsplash.com/photo-1560769629-975ec94e6a86?w=300", category: "classic", collection: "minimalist", color: "white", size: ["8", "9", "10", "11"] },
+            { id: 4, name: "Chuck Taylor All Star", brand: "Converse", price: 55, image: "https://images.unsplash.com/photo-1514989940723-e8e51635b782?w=300", category: "trending", collection: "streetwear", color: "black", size: ["7", "8", "9", "10", "11", "12"] },
+            { id: 5, name: "Air Max 270", brand: "Nike", price: 150, image: "https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=300", category: "new", collection: "athletic", color: "blue", size: ["8", "9", "10", "11", "12"] },
+            { id: 6, name: "Ultraboost 22", brand: "Adidas", price: 190, image: "https://images.unsplash.com/photo-1551107696-a4b0c5a0d9a2?w=300", category: "new", collection: "athletic", color: "gray", size: ["8", "9", "10", "11"] },
+            { id: 7, name: "Air Jordan 4 Retro", brand: "Nike", price: 200, image: "https://images.unsplash.com/photo-1549298916-b41d501d3772?w=300", category: "trending", collection: "streetwear", color: "white", size: ["8", "9", "10", "11", "12"] },
+            { id: 8, name: "Yeezy Boost 350 V2", brand: "Adidas", price: 220, image: "https://images.unsplash.com/photo-1560769629-975ec94e6a86?w=300", category: "new", collection: "streetwear", color: "gray", size: ["8", "9", "10", "11"] },
+            { id: 9, name: "Dunk Low", brand: "Nike", price: 100, image: "https://images.unsplash.com/photo-1606107557195-0e29a4b5b4aa?w=300", category: "trending", collection: "streetwear", color: "white", size: ["7", "8", "9", "10", "11"] },
+            { id: 10, name: "Forum Low", brand: "Adidas", price: 75, image: "https://images.unsplash.com/photo-1551107696-a4b0c5a0d9a2?w=300", category: "new", collection: "minimalist", color: "white", size: ["8", "9", "10", "11"] }
+        ];
+        
+        const brands = ["Nike", "Adidas", "Jordan", "Converse", "Puma", "New Balance"];
+        const colors = [
+            { name: "Black", value: "#000000" },
+            { name: "White", value: "#FFFFFF" },
+            { name: "Red", value: "#FF0000" },
+            { name: "Blue", value: "#0000FF" },
+            { name: "Gray", value: "#808080" },
+            { name: "Green", value: "#008000" }
+        ];
+        const menSizes = ["7", "8", "9", "10", "11", "12", "13"];
+        const womenSizes = ["5", "6", "7", "8", "9", "10", "11"];
+        
+        let favorites = JSON.parse(localStorage.getItem('favorites') || '[]');
+        let recentlyViewed = JSON.parse(localStorage.getItem('recentlyViewed') || '[]');
+        let activeFilters = { brands: [], colors: [], sizes: [], maxPrice: 1000 };
+        let currentGender = 'men';
+        
+        // Initialize app
+        function init() {
+            renderHomeShoes();
+            renderFilterOptions();
+            updateSearchButton();
         }
-
-        // Filter functionality
-        let activeFilter = null;
-
-        function toggleFilter(filterName) {
-            const panel = document.getElementById(filterName + '-panel');
-            const chevron = document.getElementById(filterName + '-chevron');
-            const button = panel.previousElementSibling;
+        
+        function renderHomeShoes() {
+            renderShoeGrid('trending-grid', shoes.filter(s => s.category === 'trending'));
+            renderShoeGrid('releases-grid', shoes.filter(s => s.category === 'new'));
+            renderCollections();
+            renderRecentlyViewed();
+        }
+        
+        function renderCollections() {
+            const collections = [
+                { name: "Streetwear Favorites", shoes: shoes.filter(s => s.collection === 'streetwear').slice(0, 3) },
+                { name: "Minimalist Looks", shoes: shoes.filter(s => s.collection === 'minimalist').slice(0, 3) },
+                { name: "Athletic Performance", shoes: shoes.filter(s => s.collection === 'athletic').slice(0, 3) }
+            ];
             
-            if (activeFilter === filterName) {
-                panel.classList.remove('active');
-                chevron.classList.remove('up');
-                button.classList.remove('active');
-                activeFilter = null;
+            let html = '';
+            collections.forEach(collection => {
+                html += `<div class="card"><h3>${collection.name}</h3><div class="grid">`;
+                collection.shoes.forEach(shoe => {
+                    html += createShoeCard(shoe);
+                });
+                html += '</div></div>';
+            });
+            document.getElementById('collections-grid').innerHTML = html;
+        }
+        
+        function renderRecentlyViewed() {
+            const grid = document.getElementById('recent-grid');
+            if (recentlyViewed.length === 0) {
+                grid.innerHTML = '<div class="empty-state">View some shoes to see them here!</div>';
             } else {
-                // Close previous active filter
-                if (activeFilter) {
-                    const prevPanel = document.getElementById(activeFilter + '-panel');
-                    const prevChevron = document.getElementById(activeFilter + '-chevron');
-                    const prevButton = prevPanel.previousElementSibling;
-                    prevPanel.classList.remove('active');
-                    prevChevron.classList.remove('up');
-                    prevButton.classList.remove('active');
-                }
-                
-                panel.classList.add('active');
-                chevron.classList.add('up');
-                button.classList.add('active');
-                activeFilter = filterName;
+                grid.innerHTML = recentlyViewed.slice(0, 5).map(id => {
+                    const shoe = shoes.find(s => s.id === id);
+                    return shoe ? createShoeCard(shoe) : '';
+                }).join('');
             }
         }
-
-        // Color selection
-        function toggleColor(colorName) {
-            const colorCircle = document.getElementById('color-' + colorName);
-            colorCircle.classList.toggle('selected');
+        
+        function renderShoeGrid(containerId, shoeList) {
+            document.getElementById(containerId).innerHTML = shoeList.map(createShoeCard).join('');
         }
-
-        // Size selection
-        let currentGender = 'mens';
-        let selectedSizes = [];
-
+        
+        function createShoeCard(shoe) {
+            const isFavorited = favorites.includes(shoe.id);
+            return `
+                <div class="shoe-card" onclick="viewShoe(${shoe.id})">
+                    <div class="shoe-img" style="background-image: url('${shoe.image}')"></div>
+                    <div class="shoe-name">${shoe.name}</div>
+                    <div class="shoe-brand">${shoe.brand}</div>
+                    <div class="shoe-price">$${shoe.price}</div>
+                    <button class="fav-btn ${isFavorited ? 'favorited' : ''}" onclick="toggleFavorite(event, ${shoe.id})">
+                        ${isFavorited ? '❤️' : '🤍'}
+                    </button>
+                </div>
+            `;
+        }
+        
+        function renderFilterOptions() {
+            // Brands
+            document.getElementById('brands-list').innerHTML = brands.map(brand => 
+                `<div class="checkbox-item">
+                    <input type="checkbox" id="brand-${brand}" onchange="updateFilter('brands', '${brand}', this.checked)">
+                    <label for="brand-${brand}">${brand}</label>
+                </div>`
+            ).join('');
+            
+            // Colors
+            document.getElementById('colors-list').innerHTML = colors.map(color => 
+                `<div class="color-item" onclick="toggleColor('${color.name.toLowerCase()}')">
+                    <div class="color-circle" style="background-color: ${color.value}" id="color-${color.name.toLowerCase()}"></div>
+                    <div class="color-name">${color.name}</div>
+                </div>`
+            ).join('');
+            
+            // Sizes
+            renderSizes();
+            
+            // Price slider
+            document.getElementById('price-slider').oninput = function() {
+                document.getElementById('price-value').textContent = '$' + this.value;
+                activeFilters.maxPrice = parseInt(this.value);
+                updateSearchButton();
+            };
+        }
+        
+        function renderSizes() {
+            const sizes = currentGender === 'men' ? menSizes : womenSizes;
+            document.getElementById('sizes-list').innerHTML = sizes.map(size => 
+                `<button class="size-btn" onclick="toggleSize('${size}')" id="size-${size}">${size}</button>`
+            ).join('');
+        }
+        
+        function switchSection(section) {
+            document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+            document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+            document.getElementById(section).classList.add('active');
+            event.target.closest('.nav-item').classList.add('active');
+            
+            if (section === 'favorites') {
+                renderFavorites();
+            }
+        }
+        
+        function toggleFilter(filterId) {
+            const panel = document.getElementById(filterId + '-panel');
+            const chevron = event.target.querySelector('.chevron');
+            
+            if (panel.classList.contains('active')) {
+                panel.classList.remove('active');
+                chevron.textContent = '▼';
+            } else {
+                document.querySelectorAll('.filter-panel').forEach(p => p.classList.remove('active'));
+                document.querySelectorAll('.chevron').forEach(c => c.textContent = '▼');
+                panel.classList.add('active');
+                chevron.textContent = '▲';
+            }
+        }
+        
+        function updateFilter(type, value, checked) {
+            if (checked) {
+                if (!activeFilters[type].includes(value)) {
+                    activeFilters[type].push(value);
+                }
+            } else {
+                activeFilters[type] = activeFilters[type].filter(v => v !== value);
+            }
+            updateSearchButton();
+        }
+        
+        function toggleColor(colorName) {
+            const colorEl = document.getElementById('color-' + colorName);
+            if (colorEl.classList.contains('selected')) {
+                colorEl.classList.remove('selected');
+                activeFilters.colors = activeFilters.colors.filter(c => c !== colorName);
+            } else {
+                colorEl.classList.add('selected');
+                activeFilters.colors.push(colorName);
+            }
+            updateSearchButton();
+        }
+        
+        function toggleSize(size) {
+            const sizeEl = document.getElementById('size-' + size);
+            if (sizeEl.classList.contains('selected')) {
+                sizeEl.classList.remove('selected');
+                activeFilters.sizes = activeFilters.sizes.filter(s => s !== size);
+            } else {
+                sizeEl.classList.add('selected');
+                activeFilters.sizes.push(size);
+            }
+            updateSearchButton();
+        }
+        
         function setGender(gender) {
             currentGender = gender;
+            document.querySelectorAll('.gender-btn').forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+            activeFilters.sizes = [];
+            renderSizes();
+            updateSearchButton();
+        }
+        
+        function updateSearchButton() {
+            const hasFilters = activeFilters.brands.length > 0 || 
+                              activeFilters.colors.length > 0 || 
+                              activeFilters.sizes.length > 0 || 
+                              activeFilters.maxPrice < 1000;
             
-            // Update buttons
-            document.getElementById('mens-btn').classList.toggle('active', gender === 'mens');
-            document.getElementById('womens-btn').classList.toggle('active', gender === 'womens');
-            
-            // Show/hide size grids
-            document.getElementById('mens-sizes').classList.toggle('hidden', gender !== 'mens');
-            document.getElementById('womens-sizes').classList.toggle('hidden', gender !== 'womens');
-            
-            // Clear selected sizes when switching
-            selectedSizes = [];
-            document.querySelectorAll('.size-button').forEach(btn => {
-                btn.classList.remove('selected');
+            document.getElementById('search-btn').style.display = hasFilters ? 'block' : 'none';
+        }
+        
+        function performSearch() {
+            let results = shoes.filter(shoe => {
+                const brandMatch = activeFilters.brands.length === 0 || activeFilters.brands.includes(shoe.brand);
+                const colorMatch = activeFilters.colors.length === 0 || activeFilters.colors.includes(shoe.color);
+                const sizeMatch = activeFilters.sizes.length === 0 || activeFilters.sizes.some(size => shoe.size.includes(size));
+                const priceMatch = shoe.price <= activeFilters.maxPrice;
+                
+                return brandMatch && colorMatch && sizeMatch && priceMatch;
             });
-        }
-
-        function toggleSize(size) {
-            const sizeButton = event.currentTarget;
-            const isSelected = selectedSizes.includes(size);
             
-            if (isSelected) {
-                selectedSizes = selectedSizes.filter(s => s !== size);
-                sizeButton.classList.remove('selected');
-            } else {
-                selectedSizes.push(size);
-                sizeButton.classList.add('selected');
+            document.getElementById('search-results').style.display = 'block';
+            renderShoeGrid('results-grid', results);
+        }
+        
+        function viewShoe(shoeId) {
+            if (!recentlyViewed.includes(shoeId)) {
+                recentlyViewed.unshift(shoeId);
+                if (recentlyViewed.length > 10) recentlyViewed.pop();
+                localStorage.setItem('recentlyViewed', JSON.stringify(recentlyViewed));
             }
         }
-
-        // Price range
-        function updatePriceRange() {
-            const minPrice = parseInt(document.getElementById('min-price').value);
-            const maxPrice = parseInt(document.getElementById('max-price').value);
-            
-            // Ensure min doesn't exceed max
-            if (minPrice > maxPrice) {
-                document.getElementById('min-price').value = maxPrice;
-                return;
-            }
-            
-            // Update display values
-            document.getElementById('min-value').textContent = '$' + minPrice;
-            document.getElementById('max-value').textContent = '$' + maxPrice;
-            
-            // Update visual range
-            const range = document.getElementById('slider-range');
-            const percent1 = (minPrice / 1000) * 100;
-            const percent2 = (maxPrice / 1000) * 100;
-            range.style.left = percent1 + '%';
-            range.style.width = (percent2 - percent1) + '%';
-        }
-
-        // Favorites functionality
-        let favorites = [];
-        const shoes = [
-            { id: 1, name: "Nike Air Max 270", price: "$150" },
-            { id: 2, name: "Adidas UltraBoost 22", price: "$180" },
-            { id: 3, name: "Jordan 1 Retro High", price: "$170" },
-            { id: 4, name: "Yeezy Boost 350 V2", price: "$220" },
-            { id: 5, name: "New Balance 990v5", price: "$175" },
-            { id: 6, name: "Vans Old Skool", price: "$65" },
-            { id: 7, name: "Converse Chuck 70", price: "$85" },
-            { id: 8, name: "Puma Suede Classic", price: "$70" }
-        ];
-
-        function toggleFavorite(shoeId) {
-            const button = event.currentTarget;
-            const isCurrentlyFavorited = favorites.includes(shoeId);
-            
-            if (isCurrentlyFavorited) {
-                favorites = favorites.filter(id => id !== shoeId);
-                button.classList.remove('favorited');
+        
+        function toggleFavorite(event, shoeId) {
+            event.stopPropagation();
+            const index = favorites.indexOf(shoeId);
+            if (index > -1) {
+                favorites.splice(index, 1);
             } else {
                 favorites.push(shoeId);
-                button.classList.add('favorited');
             }
+            localStorage.setItem('favorites', JSON.stringify(favorites));
             
-            updateFavoritesDisplay();
+            const btn = event.target;
+            btn.classList.toggle('favorited');
+            btn.textContent = btn.classList.contains('favorited') ? '❤️' : '🤍';
         }
-
-        function updateFavoritesDisplay() {
-            const favoritesContent = document.getElementById('favorites-content');
-            
+        
+        function renderFavorites() {
+            const grid = document.getElementById('favorites-grid');
             if (favorites.length === 0) {
-                favoritesContent.innerHTML = `
-                    <div class="empty-state">
-                        <svg class="empty-state-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path>
-                        </svg>
-                        <h3>No favorites yet</h3>
-                        <p>Start browsing and add shoes to your wishlist!</p>
-                    </div>
-                `;
+                grid.innerHTML = '<div class="empty-state">No favorites yet. Heart some shoes to see them here!</div>';
             } else {
-                const favoriteShoes = shoes.filter(shoe => favorites.includes(shoe.id));
-                favoritesContent.innerHTML = `
-                    <div class="shoe-grid">
-                        ${favoriteShoes.map(shoe => `
-                            <div class="shoe-card" data-shoe-id="${shoe.id}">
-                                <button class="favorite-btn favorited" onclick="toggleFavorite(${shoe.id})">
-                                    <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24">
-                                        <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
-                                    </svg>
-                                </button>
-                                <div class="shoe-image">${shoe.name}</div>
-                                <div class="shoe-name">${shoe.name}</div>
-                                <div class="shoe-price">${shoe.price}</div>
-                            </div>
-                        `).join('')}
-                    </div>
-                `;
+                const favoriteShoes = favorites.map(id => shoes.find(s => s.id === id)).filter(Boolean);
+                grid.innerHTML = favoriteShoes.map(createShoeCard).join('');
             }
         }
-
-        // Initialize price range on page load
-        updatePriceRange();
+        
+        // Initialize on load
+        init();
     </script>
 </body>
 </html>
