@@ -436,27 +436,53 @@
     </div>
 
     <script>
-        // Shoe Database with accurate shoes matching titles
+        // Complete Shoe Database - All 30 shoes with accurate data
         const shoesDatabase = [
-            // Trending Now - Popular shoes in 2024
-            { id: 1, name: "Air Jordan 1 Retro High OG", brand: "Jordan", price: 170, image: "Air Jordan 1", category: "trending", colors: ["Black", "White", "Red"], sizes: ["8", "9", "10", "11", "12"], materials: ["Leather"], sports: ["Basketball"] },
-            { id: 2, name: "Nike Dunk Low", brand: "Nike", price: 100, image: "Nike Dunk Low", category: "trending", colors: ["White", "Black"], sizes: ["7", "8", "9", "10", "11"], materials: ["Leather"], sports: ["Skateboarding"] },
-            { id: 3, name: "Adidas Gazelle", brand: "Adidas", price: 90, image: "Adidas Gazelle", category: "trending", colors: ["Blue", "Green", "Red"], sizes: ["8", "9", "10", "11"], materials: ["Suede"], sports: ["Walking"] },
-            { id: 4, name: "New Balance 550", brand: "New Balance", price: 110, image: "New Balance 550", category: "trending", colors: ["White", "Gray"], sizes: ["7", "8", "9", "10", "11"], materials: ["Leather"], sports: ["Basketball"] },
+            // Trending shoes
+            { id: 1, name: "Nike Air Force 1 '07", brand: "Nike", price: 115, image: "nike-air-force-1.jpg", category: "trending", colors: ["White", "Black"], sizes: ["7", "7.5", "8", "8.5", "9", "9.5", "10", "10.5", "11", "11.5", "12"], materials: ["Leather"], sports: ["Basketball"] },
+            { id: 2, name: "Adidas Samba", brand: "Adidas", price: 100, image: "adidas-samba.jpg", category: "trending", colors: ["Black", "White"], sizes: ["7", "7.5", "8", "8.5", "9", "9.5", "10", "10.5", "11"], materials: ["Leather", "Suede"], sports: ["Soccer"] },
+            { id: 3, name: "Wales Bonner x Adidas Samba", brand: "Adidas", price: 180, image: "adidas-samba.jpg", category: "trending", colors: ["Brown", "Cream", "Gold"], sizes: ["7", "8", "9", "10", "11"], materials: ["Leather"], sports: ["Soccer"] },
+            { id: 4, name: "Adidas Gazelle", brand: "Adidas", price: 100, image: "adidas-gazelle.jpg", category: "trending", colors: ["Red", "Blue", "Green", "Black"], sizes: ["7", "7.5", "8", "8.5", "9", "9.5", "10", "10.5", "11"], materials: ["Suede"], sports: ["Training"] },
             
-            // New Releases - Latest drops from top brands
-            { id: 5, name: "Nike Air Max 1 '87", brand: "Nike", price: 140, image: "Nike Air Max 1", category: "releases", colors: ["White", "Red", "Gray"], sizes: ["8", "9", "10", "11", "12"], materials: ["Mesh", "Suede"], sports: ["Running"] },
-            { id: 6, name: "Adidas Ultraboost 23", brand: "Adidas", price: 190, image: "Adidas Ultraboost", category: "releases", colors: ["Black", "White"], sizes: ["7", "8", "9", "10", "11"], materials: ["Primeknit"], sports: ["Running"] },
-            { id: 7, name: "Jordan 4 Retro", brand: "Jordan", price: 210, image: "Jordan 4", category: "releases", colors: ["White", "Black", "Red"], sizes: ["8", "9", "10", "11", "12"], materials: ["Leather", "Mesh"], sports: ["Basketball"] },
-            { id: 8, name: "Converse Chuck 70", brand: "Converse", price: 85, image: "Converse Chuck 70", category: "releases", colors: ["Black", "White", "Navy"], sizes: ["7", "8", "9", "10", "11"], materials: ["Canvas"], sports: ["Walking"] },
+            // New Releases
+            { id: 5, name: "Adidas Handball Spezial", brand: "Adidas", price: 110, image: "adidas-gazelle.jpg", category: "releases", colors: ["Navy", "Black", "Blue"], sizes: ["7", "8", "9", "10", "11"], materials: ["Suede"], sports: ["Handball"] },
+            { id: 6, name: "Asics Gel-Kayano 14", brand: "ASICS", price: 150, image: "nike-air-force-1.jpg", category: "releases", colors: ["Silver", "Gold", "Neon"], sizes: ["7", "8", "9", "10", "11", "12"], materials: ["Mesh", "Synthetic"], sports: ["Running"] },
+            { id: 7, name: "Puma Speedcat OG", brand: "Puma", price: 110, image: "converse-chuck.jpg", category: "releases", colors: ["Black", "Red"], sizes: ["7", "8", "9", "10", "11"], materials: ["Suede", "Leather"], sports: ["Racing"] },
+            { id: 8, name: "Puma Speedcat Ballet", brand: "Puma", price: 100, image: "converse-chuck.jpg", category: "releases", colors: ["Pink", "Beige", "Cream"], sizes: ["6", "7", "8", "9", "10"], materials: ["Suede"], sports: ["Fashion"] },
             
-            // Style Collections
-            { id: 9, name: "Nike Air Force 1", brand: "Nike", price: 90, image: "Nike Air Force 1", category: "minimalist", colors: ["White"], sizes: ["7", "8", "9", "10", "11", "12"], materials: ["Leather"], sports: ["Basketball"] },
-            { id: 10, name: "Adidas Stan Smith", brand: "Adidas", price: 80, image: "Adidas Stan Smith", category: "minimalist", colors: ["White", "Green"], sizes: ["7", "8", "9", "10", "11"], materials: ["Leather"], sports: ["Tennis"] },
-            { id: 11, name: "Vans Old Skool", brand: "Vans", price: 65, image: "Vans Old Skool", category: "streetwear", colors: ["Black", "White"], sizes: ["7", "8", "9", "10", "11"], materials: ["Canvas", "Suede"], sports: ["Skateboarding"] },
-            { id: 12, name: "Nike SB Dunk High", brand: "Nike", price: 120, image: "Nike SB Dunk", category: "streetwear", colors: ["Black", "White", "Red"], sizes: ["8", "9", "10", "11"], materials: ["Leather"], sports: ["Skateboarding"] },
-            { id: 13, name: "Nike React Infinity Run", brand: "Nike", price: 160, image: "Nike React Infinity", category: "school", colors: ["Black", "White", "Gray"], sizes: ["7", "8", "9", "10", "11"], materials: ["Flyknit"], sports: ["Running"] },
-            { id: 14, name: "Adidas Superstar", brand: "Adidas", price: 85, image: "Adidas Superstar", category: "school", colors: ["White", "Black"], sizes: ["7", "8", "9", "10", "11"], materials: ["Leather"], sports: ["Walking"] }
+            // Style Collections - Minimalist
+            { id: 9, name: "Converse Chuck 70", brand: "Converse", price: 85, image: "converse-chuck.jpg", category: "minimalist", colors: ["White", "Black", "Cream"], sizes: ["7", "8", "9", "10", "11"], materials: ["Canvas"], sports: ["Walking"] },
+            { id: 10, name: "Reebok Classic AZ", brand: "Reebok", price: 90, image: "nike-air-force-1.jpg", category: "minimalist", colors: ["White", "Pink", "Gray"], sizes: ["7", "8", "9", "10", "11"], materials: ["Leather"], sports: ["Walking"] },
+            { id: 11, name: "New Balance 1906L Loafers", brand: "New Balance", price: 150, image: "adidas-samba.jpg", category: "minimalist", colors: ["Beige", "Gray"], sizes: ["7", "8", "9", "10", "11"], materials: ["Leather", "Textile"], sports: ["Walking"] },
+            { id: 12, name: "Camper Peu Path", brand: "Camper", price: 150, image: "converse-chuck.jpg", category: "minimalist", colors: ["Brown", "Tan", "Black"], sizes: ["7", "8", "9", "10", "11"], materials: ["Leather", "Textile"], sports: ["Walking"] },
+            
+            // Style Collections - Streetwear
+            { id: 13, name: "Puma Speedcat Go", brand: "Puma", price: 95, image: "converse-chuck.jpg", category: "streetwear", colors: ["Black", "Red", "White"], sizes: ["7", "8", "9", "10", "11"], materials: ["Mesh", "Synthetic"], sports: ["Racing"] },
+            { id: 14, name: "Adidas Taekwondo Retro", brand: "Adidas", price: 90, image: "adidas-samba.jpg", category: "streetwear", colors: ["White", "Black"], sizes: ["7", "8", "9", "10", "11"], materials: ["Leather"], sports: ["Martial Arts"] },
+            { id: 15, name: "Gola Stadium '86", brand: "Gola", price: 100, image: "adidas-gazelle.jpg", category: "streetwear", colors: ["Navy", "Cream", "Red"], sizes: ["7", "8", "9", "10", "11"], materials: ["Leather"], sports: ["Tennis"] },
+            { id: 16, name: "Onitsuka Tiger Mexico 66", brand: "Onitsuka Tiger", price: 120, image: "adidas-samba.jpg", category: "streetwear", colors: ["Yellow", "Blue", "White"], sizes: ["7", "8", "9", "10", "11"], materials: ["Leather"], sports: ["Running"] },
+            
+            // Athletic & Running
+            { id: 17, name: "Hoka Bondi 9", brand: "Hoka", price: 165, image: "nike-air-force-1.jpg", category: "school", colors: ["Blue", "Black", "White"], sizes: ["7", "8", "9", "10", "11", "12"], materials: ["Mesh"], sports: ["Running"] },
+            { id: 18, name: "Bronax Wide Toe Box Running Shoes", brand: "Bronax", price: 50, image: "nike-air-force-1.jpg", category: "school", colors: ["Black", "Gray", "Blue"], sizes: ["7", "8", "9", "10", "11"], materials: ["Mesh"], sports: ["Running"] },
+            { id: 19, name: "Vibram FiveFingers", brand: "Vibram", price: 120, image: "converse-chuck.jpg", category: "school", colors: ["Black", "Neon", "Gray"], sizes: ["7", "8", "9", "10", "11"], materials: ["Rubber", "Neoprene"], sports: ["Running"] },
+            
+            // Fashion & Hybrid
+            { id: 20, name: "Vivaia Yancy Sneakerina", brand: "Vivaia", price: 159, image: "adidas-gazelle.jpg", category: "minimalist", colors: ["Gray", "Pink", "Cream"], sizes: ["6", "7", "8", "9", "10"], materials: ["Satin", "Suede"], sports: ["Fashion"] },
+            { id: 21, name: "Samba Janes Sneakerina", brand: "Adidas", price: 120, image: "adidas-samba.jpg", category: "minimalist", colors: ["Pink", "Cream", "White"], sizes: ["6", "7", "8", "9", "10"], materials: ["Satin", "Mesh"], sports: ["Fashion"] },
+            { id: 22, name: "Reebok Chunky Platform Sneakers", brand: "Reebok", price: 110, image: "nike-air-force-1.jpg", category: "streetwear", colors: ["Gray", "Beige", "White"], sizes: ["6", "7", "8", "9", "10"], materials: ["Leather", "Synthetic"], sports: ["Fashion"] },
+            
+            // Retro & Chunky
+            { id: 23, name: "Brown Suede Trainers", brand: "Various", price: 120, image: "adidas-gazelle.jpg", category: "streetwear", colors: ["Brown", "Tan"], sizes: ["7", "8", "9", "10", "11"], materials: ["Suede"], sports: ["Walking"] },
+            { id: 24, name: "Asics Gel Trainers (Chunky)", brand: "ASICS", price: 140, image: "nike-air-force-1.jpg", category: "streetwear", colors: ["Silver", "Pink", "White"], sizes: ["7", "8", "9", "10", "11"], materials: ["Synthetic"], sports: ["Running"] },
+            { id: 25, name: "Gola Retro Trainers", brand: "Gola", price: 110, image: "adidas-gazelle.jpg", category: "streetwear", colors: ["Beige", "Navy", "Gray"], sizes: ["7", "8", "9", "10", "11"], materials: ["Leather"], sports: ["Tennis"] },
+            { id: 26, name: "Colorful Adidas Trainers", brand: "Adidas", price: 100, image: "adidas-samba.jpg", category: "streetwear", colors: ["Blue", "Pink", "Green"], sizes: ["7", "8", "9", "10", "11"], materials: ["Suede", "Leather"], sports: ["Training"] },
+            
+            // Luxury
+            { id: 27, name: "Balenciaga 3XL Sneakers", brand: "Balenciaga", price: 1050, image: "nike-air-force-1.jpg", category: "luxury", colors: ["Gray", "Black", "White"], sizes: ["7", "8", "9", "10", "11"], materials: ["Leather", "Synthetic"], sports: ["Fashion"] },
+            { id: 28, name: "The Row Fisherman Sandals", brand: "The Row", price: 890, image: "converse-chuck.jpg", category: "luxury", colors: ["Black", "Tan"], sizes: ["7", "8", "9", "10", "11"], materials: ["Leather"], sports: ["Fashion"] },
+            { id: 29, name: "Miu Miu Tyre Sneakers", brand: "Miu Miu", price: 950, image: "adidas-gazelle.jpg", category: "luxury", colors: ["Black", "White", "Pink"], sizes: ["6", "7", "8", "9", "10"], materials: ["Suede", "Technical"], sports: ["Fashion"] },
+            { id: 30, name: "Maison Margiela Tabi Ballerina Flats", brand: "Margiela", price: 980, image: "converse-chuck.jpg", category: "luxury", colors: ["Black", "Nude"], sizes: ["6", "7", "8", "9", "10"], materials: ["Leather"], sports: ["Fashion"] }
         ];
 
         // App State
@@ -491,15 +517,15 @@
 
         // Home section shoe loading
         function loadHomeShoes() {
-            const trending = shoesDatabase.filter(shoe => shoe.category === 'trending');
-            const releases = shoesDatabase.filter(shoe => shoe.category === 'releases');
-            const minimalist = shoesDatabase.filter(shoe => shoe.category === 'minimalist');
-            const streetwear = shoesDatabase.filter(shoe => shoe.category === 'streetwear');
-            const school = shoesDatabase.filter(shoe => shoe.category === 'school');
+            const trending = shoesDatabase.filter(shoe => shoe.category === 'trending').slice(0, 4);
+            const releases = shoesDatabase.filter(shoe => shoe.category === 'releases').slice(0, 4);
+            const minimalist = shoesDatabase.filter(shoe => shoe.category === 'minimalist').slice(0, 2);
+            const streetwear = shoesDatabase.filter(shoe => shoe.category === 'streetwear').slice(0, 2);
+            const school = shoesDatabase.filter(shoe => shoe.category === 'school').slice(0, 2);
 
             renderShoes(trending, 'trending-grid');
             renderShoes(releases, 'releases-grid');
-            renderShoes([...minimalist, ...school], 'collections-grid');
+            renderShoes([...minimalist, ...streetwear, ...school], 'collections-grid');
         }
 
         function renderShoes(shoes, containerId) {
@@ -511,7 +537,7 @@
             const isFavorited = favorites.some(f => f.id === shoe.id);
             return `
                 <div class="shoe-card" onclick="viewShoe(${shoe.id})">
-                    <div class="shoe-img">${shoe.image}</div>
+                    <div class="shoe-img" style="background-image: url('${shoe.image}'); background-size: cover; background-position: center;">${!shoe.image.includes('.jpg') ? shoe.image : ''}</div>
                     <div class="shoe-name">${shoe.name}</div>
                     <div class="shoe-brand">${shoe.brand}</div>
                     <div class="shoe-price">$${shoe.price}</div>
