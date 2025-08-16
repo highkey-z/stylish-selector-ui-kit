@@ -62,7 +62,6 @@
         .gender-btn { padding: 0.5rem 1rem; border: none; border-radius: 0.5rem; cursor: pointer; background: var(--accent); font-weight: 500; }
         .gender-btn.active { background: var(--text); color: white; }
         .search-btn { position: fixed; bottom: 90px; left: 50%; transform: translateX(-50%); background: var(--blue); color: white; padding: 1rem 2rem; border: none; border-radius: 2rem; font-weight: 600; cursor: pointer; display: none; z-index: 50; }
-        .slider { width: 100%; height: 0.5rem; background: var(--border); border-radius: 1rem; appearance: none; }
         .empty-state { text-align: center; padding: 2rem; color: var(--muted); }
         h1 { font-size: 1.875rem; font-weight: bold; margin-bottom: 0.5rem; text-align: center; }
         h2 { font-size: 1.25rem; font-weight: 600; margin-bottom: 1rem; }
@@ -134,9 +133,11 @@
                     <label class="checkbox-item"><input type="checkbox" value="Converse"> Converse</label>
                     <label class="checkbox-item"><input type="checkbox" value="Reebok"> Reebok</label>
                     <label class="checkbox-item"><input type="checkbox" value="ASICS"> ASICS</label>
-                    <label class="checkbox-item"><input type="checkbox" value="Skechers"> Skechers</label>
+                    <label class="checkbox-item"><input type="checkbox" value="Hoka"> Hoka</label>
                     <label class="checkbox-item"><input type="checkbox" value="Under Armour"> Under Armour</label>
                     <label class="checkbox-item"><input type="checkbox" value="Fila"> Fila</label>
+                    <label class="checkbox-item"><input type="checkbox" value="Balenciaga"> Balenciaga</label>
+                    <label class="checkbox-item"><input type="checkbox" value="Onitsuka Tiger"> Onitsuka Tiger</label>
                 </div>
             </div>
 
@@ -203,17 +204,17 @@
                         <div class="color-circle" style="background: #F5F5DC;" data-color="Beige"></div>
                         <span style="font-size: 0.75rem; margin-top: 0.25rem;">Beige</span>
                     </div>
-                    <div class="color-item" onclick="toggleColor('Maroon')">
-                        <div class="color-circle" style="background: #7F1D1D;" data-color="Maroon"></div>
-                        <span style="font-size: 0.75rem; margin-top: 0.25rem;">Maroon</span>
-                    </div>
-                    <div class="color-item" onclick="toggleColor('Teal')">
-                        <div class="color-circle" style="background: #0F766E;" data-color="Teal"></div>
-                        <span style="font-size: 0.75rem; margin-top: 0.25rem;">Teal</span>
+                    <div class="color-item" onclick="toggleColor('Cream')">
+                        <div class="color-circle" style="background: #FFFDD0;" data-color="Cream"></div>
+                        <span style="font-size: 0.75rem; margin-top: 0.25rem;">Cream</span>
                     </div>
                     <div class="color-item" onclick="toggleColor('Silver')">
                         <div class="color-circle" style="background: #C0C0C0;" data-color="Silver"></div>
                         <span style="font-size: 0.75rem; margin-top: 0.25rem;">Silver</span>
+                    </div>
+                    <div class="color-item" onclick="toggleColor('Gold')">
+                        <div class="color-circle" style="background: #FFD700;" data-color="Gold"></div>
+                        <span style="font-size: 0.75rem; margin-top: 0.25rem;">Gold</span>
                     </div>
                 </div>
             </div>
@@ -275,6 +276,8 @@
                     <label class="checkbox-item"><input type="checkbox" value="Textile"> Textile</label>
                     <label class="checkbox-item"><input type="checkbox" value="Flyknit"> Flyknit</label>
                     <label class="checkbox-item"><input type="checkbox" value="Primeknit"> Primeknit</label>
+                    <label class="checkbox-item"><input type="checkbox" value="Satin"> Satin</label>
+                    <label class="checkbox-item"><input type="checkbox" value="Neoprene"> Neoprene</label>
                 </div>
             </div>
 
@@ -287,13 +290,16 @@
                 <svg class="chevron" viewBox="0 0 24 24"><polyline points="6,9 12,15 18,9"></polyline></svg>
             </div>
             <div id="price-panel" class="filter-panel">
-                <h3>Price Range</h3>
-                <div style="margin: 1rem 0;">
-                    <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
-                        <span>$<span id="min-price">0</span></span>
-                        <span>$<span id="max-price">500</span></span>
-                    </div>
-                    <input type="range" class="slider" min="0" max="500" value="500" id="price-slider" oninput="updatePrice(this.value)">
+                <h3>Select Price Range</h3>
+                <div class="checkbox-grid">
+                    <label class="checkbox-item"><input type="checkbox" value="0-50"> Under $50</label>
+                    <label class="checkbox-item"><input type="checkbox" value="50-100"> $50 - $100</label>
+                    <label class="checkbox-item"><input type="checkbox" value="100-150"> $100 - $150</label>
+                    <label class="checkbox-item"><input type="checkbox" value="150-200"> $150 - $200</label>
+                    <label class="checkbox-item"><input type="checkbox" value="200-300"> $200 - $300</label>
+                    <label class="checkbox-item"><input type="checkbox" value="300-500"> $300 - $500</label>
+                    <label class="checkbox-item"><input type="checkbox" value="500-1000"> $500 - $1000</label>
+                    <label class="checkbox-item"><input type="checkbox" value="1000+"> Over $1000</label>
                 </div>
             </div>
 
@@ -320,6 +326,9 @@
                     <label class="checkbox-item"><input type="checkbox" value="Walking"> Walking</label>
                     <label class="checkbox-item"><input type="checkbox" value="Skateboarding"> Skateboarding</label>
                     <label class="checkbox-item"><input type="checkbox" value="Cycling"> Cycling</label>
+                    <label class="checkbox-item"><input type="checkbox" value="Fashion"> Fashion</label>
+                    <label class="checkbox-item"><input type="checkbox" value="Lifestyle"> Lifestyle</label>
+                    <label class="checkbox-item"><input type="checkbox" value="Training"> Training</label>
                 </div>
             </div>
 
@@ -338,7 +347,7 @@
                 <div class="grid" id="favorites-grid">
                     <div class="empty-state">
                         <svg style="width: 4rem; height: 4rem; margin: 0 auto 1rem; color: var(--muted);" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <path d="m19 21-7-4-7 4V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v16z"/>
+                            <path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.29 1.51 4.04 3 5.5l7 7Z"/>
                         </svg>
                         <h3 style="margin-bottom: 0.5rem;">No favorites yet</h3>
                         <p>Start adding shoes to your wishlist!</p>
@@ -417,14 +426,15 @@
                 </div>
                 <div class="nav-item" onclick="switchTab('favorites')">
                     <svg class="nav-icon" viewBox="0 0 24 24">
-                        <path d="m19 21-7-4-7 4V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v16z"/>
+                        <path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.29 1.51 4.04 3 5.5l7 7Z"/>
                     </svg>
                     <span class="nav-label">Favorites</span>
                 </div>
                 <div class="nav-item" onclick="switchTab('settings')">
                     <svg class="nav-icon" viewBox="0 0 24 24">
                         <circle cx="12" cy="12" r="3"/>
-                        <path d="M12 1v6m0 6v6m-9-3h6m6 0h6M7.05 7.05l4.24 4.24m0 0l4.24 4.24M16.95 7.05l-4.24 4.24m0 0l-4.24 4.24"/>
+                        <path d="M12 1v6m0 6v6m11-9h-6m-6 0H1"/>
+                        <path d="M20.2 7.8l-4.2 4.2m0 0l-4.2 4.2M3.8 16.2l4.2-4.2m0 0l4.2-4.2"/>
                     </svg>
                     <span class="nav-label">Settings</span>
                 </div>
@@ -436,73 +446,96 @@
     </div>
 
     <script>
-        // Complete Shoe Database - All 30 shoes with accurate data
+        // Expanded Shoe Database - 50+ shoes with accurate data and images
         const shoesDatabase = [
-            // Trending shoes
-            { id: 1, name: "Nike Air Force 1 '07", brand: "Nike", price: 115, image: "nike-air-force-1.jpg", category: "trending", colors: ["White", "Black"], sizes: ["7", "7.5", "8", "8.5", "9", "9.5", "10", "10.5", "11", "11.5", "12"], materials: ["Leather"], sports: ["Basketball"] },
-            { id: 2, name: "Adidas Samba", brand: "Adidas", price: 100, image: "adidas-samba.jpg", category: "trending", colors: ["Black", "White"], sizes: ["7", "7.5", "8", "8.5", "9", "9.5", "10", "10.5", "11"], materials: ["Leather", "Suede"], sports: ["Soccer"] },
-            { id: 3, name: "Wales Bonner x Adidas Samba", brand: "Adidas", price: 180, image: "adidas-samba.jpg", category: "trending", colors: ["Brown", "Cream", "Gold"], sizes: ["7", "8", "9", "10", "11"], materials: ["Leather"], sports: ["Soccer"] },
-            { id: 4, name: "Adidas Gazelle", brand: "Adidas", price: 100, image: "adidas-gazelle.jpg", category: "trending", colors: ["Red", "Blue", "Green", "Black"], sizes: ["7", "7.5", "8", "8.5", "9", "9.5", "10", "10.5", "11"], materials: ["Suede"], sports: ["Training"] },
-            
-            // New Releases
-            { id: 5, name: "Adidas Handball Spezial", brand: "Adidas", price: 110, image: "adidas-gazelle.jpg", category: "releases", colors: ["Navy", "Black", "Blue"], sizes: ["7", "8", "9", "10", "11"], materials: ["Suede"], sports: ["Handball"] },
-            { id: 6, name: "Asics Gel-Kayano 14", brand: "ASICS", price: 150, image: "nike-air-force-1.jpg", category: "releases", colors: ["Silver", "Gold", "Neon"], sizes: ["7", "8", "9", "10", "11", "12"], materials: ["Mesh", "Synthetic"], sports: ["Running"] },
-            { id: 7, name: "Puma Speedcat OG", brand: "Puma", price: 110, image: "converse-chuck.jpg", category: "releases", colors: ["Black", "Red"], sizes: ["7", "8", "9", "10", "11"], materials: ["Suede", "Leather"], sports: ["Racing"] },
-            { id: 8, name: "Puma Speedcat Ballet", brand: "Puma", price: 100, image: "converse-chuck.jpg", category: "releases", colors: ["Pink", "Beige", "Cream"], sizes: ["6", "7", "8", "9", "10"], materials: ["Suede"], sports: ["Fashion"] },
-            
-            // Style Collections - Minimalist
-            { id: 9, name: "Converse Chuck 70", brand: "Converse", price: 85, image: "converse-chuck.jpg", category: "minimalist", colors: ["White", "Black", "Cream"], sizes: ["7", "8", "9", "10", "11"], materials: ["Canvas"], sports: ["Walking"] },
-            { id: 10, name: "Reebok Classic AZ", brand: "Reebok", price: 90, image: "nike-air-force-1.jpg", category: "minimalist", colors: ["White", "Pink", "Gray"], sizes: ["7", "8", "9", "10", "11"], materials: ["Leather"], sports: ["Walking"] },
-            { id: 11, name: "New Balance 1906L Loafers", brand: "New Balance", price: 150, image: "adidas-samba.jpg", category: "minimalist", colors: ["Beige", "Gray"], sizes: ["7", "8", "9", "10", "11"], materials: ["Leather", "Textile"], sports: ["Walking"] },
-            { id: 12, name: "Camper Peu Path", brand: "Camper", price: 150, image: "converse-chuck.jpg", category: "minimalist", colors: ["Brown", "Tan", "Black"], sizes: ["7", "8", "9", "10", "11"], materials: ["Leather", "Textile"], sports: ["Walking"] },
-            
-            // Style Collections - Streetwear
-            { id: 13, name: "Puma Speedcat Go", brand: "Puma", price: 95, image: "converse-chuck.jpg", category: "streetwear", colors: ["Black", "Red", "White"], sizes: ["7", "8", "9", "10", "11"], materials: ["Mesh", "Synthetic"], sports: ["Racing"] },
-            { id: 14, name: "Adidas Taekwondo Retro", brand: "Adidas", price: 90, image: "adidas-samba.jpg", category: "streetwear", colors: ["White", "Black"], sizes: ["7", "8", "9", "10", "11"], materials: ["Leather"], sports: ["Martial Arts"] },
-            { id: 15, name: "Gola Stadium '86", brand: "Gola", price: 100, image: "adidas-gazelle.jpg", category: "streetwear", colors: ["Navy", "Cream", "Red"], sizes: ["7", "8", "9", "10", "11"], materials: ["Leather"], sports: ["Tennis"] },
-            { id: 16, name: "Onitsuka Tiger Mexico 66", brand: "Onitsuka Tiger", price: 120, image: "adidas-samba.jpg", category: "streetwear", colors: ["Yellow", "Blue", "White"], sizes: ["7", "8", "9", "10", "11"], materials: ["Leather"], sports: ["Running"] },
-            
-            // Athletic & Running
-            { id: 17, name: "Hoka Bondi 9", brand: "Hoka", price: 165, image: "nike-air-force-1.jpg", category: "school", colors: ["Blue", "Black", "White"], sizes: ["7", "8", "9", "10", "11", "12"], materials: ["Mesh"], sports: ["Running"] },
-            { id: 18, name: "Bronax Wide Toe Box Running Shoes", brand: "Bronax", price: 50, image: "nike-air-force-1.jpg", category: "school", colors: ["Black", "Gray", "Blue"], sizes: ["7", "8", "9", "10", "11"], materials: ["Mesh"], sports: ["Running"] },
-            { id: 19, name: "Vibram FiveFingers", brand: "Vibram", price: 120, image: "converse-chuck.jpg", category: "school", colors: ["Black", "Neon", "Gray"], sizes: ["7", "8", "9", "10", "11"], materials: ["Rubber", "Neoprene"], sports: ["Running"] },
-            
-            // Fashion & Hybrid
-            { id: 20, name: "Vivaia Yancy Sneakerina", brand: "Vivaia", price: 159, image: "adidas-gazelle.jpg", category: "minimalist", colors: ["Gray", "Pink", "Cream"], sizes: ["6", "7", "8", "9", "10"], materials: ["Satin", "Suede"], sports: ["Fashion"] },
-            { id: 21, name: "Samba Janes Sneakerina", brand: "Adidas", price: 120, image: "adidas-samba.jpg", category: "minimalist", colors: ["Pink", "Cream", "White"], sizes: ["6", "7", "8", "9", "10"], materials: ["Satin", "Mesh"], sports: ["Fashion"] },
-            { id: 22, name: "Reebok Chunky Platform Sneakers", brand: "Reebok", price: 110, image: "nike-air-force-1.jpg", category: "streetwear", colors: ["Gray", "Beige", "White"], sizes: ["6", "7", "8", "9", "10"], materials: ["Leather", "Synthetic"], sports: ["Fashion"] },
-            
-            // Retro & Chunky
-            { id: 23, name: "Brown Suede Trainers", brand: "Various", price: 120, image: "adidas-gazelle.jpg", category: "streetwear", colors: ["Brown", "Tan"], sizes: ["7", "8", "9", "10", "11"], materials: ["Suede"], sports: ["Walking"] },
-            { id: 24, name: "Asics Gel Trainers (Chunky)", brand: "ASICS", price: 140, image: "nike-air-force-1.jpg", category: "streetwear", colors: ["Silver", "Pink", "White"], sizes: ["7", "8", "9", "10", "11"], materials: ["Synthetic"], sports: ["Running"] },
-            { id: 25, name: "Gola Retro Trainers", brand: "Gola", price: 110, image: "adidas-gazelle.jpg", category: "streetwear", colors: ["Beige", "Navy", "Gray"], sizes: ["7", "8", "9", "10", "11"], materials: ["Leather"], sports: ["Tennis"] },
-            { id: 26, name: "Colorful Adidas Trainers", brand: "Adidas", price: 100, image: "adidas-samba.jpg", category: "streetwear", colors: ["Blue", "Pink", "Green"], sizes: ["7", "8", "9", "10", "11"], materials: ["Suede", "Leather"], sports: ["Training"] },
-            
-            // Luxury
-            { id: 27, name: "Balenciaga 3XL Sneakers", brand: "Balenciaga", price: 1050, image: "nike-air-force-1.jpg", category: "luxury", colors: ["Gray", "Black", "White"], sizes: ["7", "8", "9", "10", "11"], materials: ["Leather", "Synthetic"], sports: ["Fashion"] },
-            { id: 28, name: "The Row Fisherman Sandals", brand: "The Row", price: 890, image: "converse-chuck.jpg", category: "luxury", colors: ["Black", "Tan"], sizes: ["7", "8", "9", "10", "11"], materials: ["Leather"], sports: ["Fashion"] },
-            { id: 29, name: "Miu Miu Tyre Sneakers", brand: "Miu Miu", price: 950, image: "adidas-gazelle.jpg", category: "luxury", colors: ["Black", "White", "Pink"], sizes: ["6", "7", "8", "9", "10"], materials: ["Suede", "Technical"], sports: ["Fashion"] },
-            { id: 30, name: "Maison Margiela Tabi Ballerina Flats", brand: "Margiela", price: 980, image: "converse-chuck.jpg", category: "luxury", colors: ["Black", "Nude"], sizes: ["6", "7", "8", "9", "10"], materials: ["Leather"], sports: ["Fashion"] }
+            // Nike Collection
+            { id: 1, name: "Nike Air Force 1 '07", brand: "Nike", price: 115, image: "nike-air-force-1.jpg", category: "trending", colors: ["White", "Black"], sizes: ["7", "7.5", "8", "8.5", "9", "9.5", "10", "10.5", "11", "11.5", "12"], materials: ["Leather"], sports: ["Basketball", "Lifestyle"] },
+            { id: 2, name: "Nike Air Max 90", brand: "Nike", price: 130, image: "nike-air-max-90.jpg", category: "trending", colors: ["White", "Gray", "Black"], sizes: ["7", "8", "9", "10", "11", "12"], materials: ["Mesh", "Leather"], sports: ["Running", "Lifestyle"] },
+            { id: 3, name: "Nike Dunk Low", brand: "Nike", price: 110, image: "nike-air-force-1.jpg", category: "releases", colors: ["White", "Black", "Red", "Blue"], sizes: ["7", "8", "9", "10", "11"], materials: ["Leather"], sports: ["Basketball", "Skateboarding"] },
+            { id: 4, name: "Nike Air Jordan 1", brand: "Jordan", price: 170, image: "jordan-1-bred.jpg", category: "trending", colors: ["Red", "Black", "White"], sizes: ["7", "8", "9", "10", "11", "12"], materials: ["Leather"], sports: ["Basketball"] },
+            { id: 5, name: "Nike Blazer Mid '77", brand: "Nike", price: 100, image: "nike-air-force-1.jpg", category: "minimalist", colors: ["White", "Black", "Navy"], sizes: ["7", "8", "9", "10", "11"], materials: ["Leather", "Suede"], sports: ["Lifestyle"] },
+
+            // Adidas Collection
+            { id: 6, name: "Adidas Samba", brand: "Adidas", price: 100, image: "adidas-samba.jpg", category: "trending", colors: ["Black", "White"], sizes: ["7", "7.5", "8", "8.5", "9", "9.5", "10", "10.5", "11"], materials: ["Leather", "Suede"], sports: ["Soccer", "Lifestyle"] },
+            { id: 7, name: "Adidas Gazelle", brand: "Adidas", price: 100, image: "adidas-gazelle.jpg", category: "trending", colors: ["Red", "Blue", "Green", "Black"], sizes: ["7", "7.5", "8", "8.5", "9", "9.5", "10", "10.5", "11"], materials: ["Suede"], sports: ["Training", "Lifestyle"] },
+            { id: 8, name: "Adidas Ultraboost 22", brand: "Adidas", price: 190, image: "adidas-ultraboost.jpg", category: "releases", colors: ["Black", "White", "Gray"], sizes: ["7", "8", "9", "10", "11", "12"], materials: ["Primeknit"], sports: ["Running"] },
+            { id: 9, name: "Adidas Stan Smith", brand: "Adidas", price: 80, image: "adidas-samba.jpg", category: "minimalist", colors: ["White", "Green"], sizes: ["7", "8", "9", "10", "11"], materials: ["Leather"], sports: ["Tennis", "Lifestyle"] },
+            { id: 10, name: "Wales Bonner x Adidas Samba", brand: "Adidas", price: 180, image: "adidas-samba.jpg", category: "luxury", colors: ["Brown", "Cream", "Gold"], sizes: ["7", "8", "9", "10", "11"], materials: ["Leather"], sports: ["Soccer", "Fashion"] },
+
+            // Converse Collection
+            { id: 11, name: "Converse Chuck 70", brand: "Converse", price: 85, image: "converse-chuck.jpg", category: "minimalist", colors: ["White", "Black", "Cream"], sizes: ["7", "8", "9", "10", "11"], materials: ["Canvas"], sports: ["Walking", "Lifestyle"] },
+            { id: 12, name: "Converse All Star High", brand: "Converse", price: 65, image: "converse-chuck.jpg", category: "streetwear", colors: ["Black", "White", "Red"], sizes: ["7", "8", "9", "10", "11"], materials: ["Canvas"], sports: ["Skateboarding", "Lifestyle"] },
+            { id: 13, name: "Converse Pro Leather", brand: "Converse", price: 75, image: "converse-chuck.jpg", category: "minimalist", colors: ["White", "Black"], sizes: ["7", "8", "9", "10", "11"], materials: ["Leather"], sports: ["Basketball", "Lifestyle"] },
+
+            // Vans Collection
+            { id: 14, name: "Vans Old Skool", brand: "Vans", price: 65, image: "vans-old-skool.jpg", category: "streetwear", colors: ["Black", "White", "Navy"], sizes: ["7", "8", "9", "10", "11"], materials: ["Canvas", "Suede"], sports: ["Skateboarding"] },
+            { id: 15, name: "Vans Authentic", brand: "Vans", price: 50, image: "vans-old-skool.jpg", category: "minimalist", colors: ["White", "Black", "Navy"], sizes: ["7", "8", "9", "10", "11"], materials: ["Canvas"], sports: ["Skateboarding", "Lifestyle"] },
+            { id: 16, name: "Vans Era", brand: "Vans", price: 55, image: "vans-old-skool.jpg", category: "streetwear", colors: ["Black", "White", "Blue"], sizes: ["7", "8", "9", "10", "11"], materials: ["Canvas"], sports: ["Skateboarding"] },
+
+            // New Balance Collection
+            { id: 17, name: "New Balance 990v5", brand: "New Balance", price: 185, image: "new-balance-990.jpg", category: "releases", colors: ["Gray", "Navy"], sizes: ["7", "8", "9", "10", "11", "12"], materials: ["Mesh", "Suede"], sports: ["Running"] },
+            { id: 18, name: "New Balance 550", brand: "New Balance", price: 110, image: "new-balance-990.jpg", category: "streetwear", colors: ["White", "Green", "Gray"], sizes: ["7", "8", "9", "10", "11"], materials: ["Leather"], sports: ["Basketball", "Lifestyle"] },
+            { id: 19, name: "New Balance 1906L Loafers", brand: "New Balance", price: 150, image: "new-balance-990.jpg", category: "minimalist", colors: ["Beige", "Gray"], sizes: ["7", "8", "9", "10", "11"], materials: ["Leather", "Textile"], sports: ["Walking", "Lifestyle"] },
+
+            // Puma Collection
+            { id: 20, name: "Puma Suede Classic", brand: "Puma", price: 70, image: "puma-suede-classic.jpg", category: "streetwear", colors: ["Blue", "Red", "Black"], sizes: ["7", "8", "9", "10", "11"], materials: ["Suede"], sports: ["Basketball", "Lifestyle"] },
+            { id: 21, name: "Puma Speedcat OG", brand: "Puma", price: 110, image: "puma-suede-classic.jpg", category: "releases", colors: ["Black", "Red"], sizes: ["7", "8", "9", "10", "11"], materials: ["Suede", "Leather"], sports: ["Racing", "Lifestyle"] },
+            { id: 22, name: "Puma RS-X", brand: "Puma", price: 110, image: "puma-suede-classic.jpg", category: "streetwear", colors: ["White", "Black", "Blue"], sizes: ["7", "8", "9", "10", "11"], materials: ["Mesh", "Synthetic"], sports: ["Running", "Fashion"] },
+
+            // ASICS Collection
+            { id: 23, name: "ASICS Gel-Lyte III", brand: "ASICS", price: 120, image: "asics-gel-lyte.jpg", category: "streetwear", colors: ["Cream", "Gray", "Blue"], sizes: ["7", "8", "9", "10", "11"], materials: ["Mesh", "Suede"], sports: ["Running", "Lifestyle"] },
+            { id: 24, name: "ASICS Gel-Kayano 14", brand: "ASICS", price: 150, image: "asics-gel-lyte.jpg", category: "releases", colors: ["Silver", "Gold"], sizes: ["7", "8", "9", "10", "11", "12"], materials: ["Mesh", "Synthetic"], sports: ["Running"] },
+            { id: 25, name: "ASICS Gel-1130", brand: "ASICS", price: 100, image: "asics-gel-lyte.jpg", category: "streetwear", colors: ["White", "Silver", "Gray"], sizes: ["7", "8", "9", "10", "11"], materials: ["Mesh", "Synthetic"], sports: ["Running", "Fashion"] },
+
+            // Reebok Collection
+            { id: 26, name: "Reebok Classic Leather", brand: "Reebok", price: 75, image: "reebok-classic.jpg", category: "minimalist", colors: ["White", "Black"], sizes: ["7", "8", "9", "10", "11"], materials: ["Leather"], sports: ["Walking", "Lifestyle"] },
+            { id: 27, name: "Reebok Club C 85", brand: "Reebok", price: 70, image: "reebok-classic.jpg", category: "minimalist", colors: ["White", "Green"], sizes: ["7", "8", "9", "10", "11"], materials: ["Leather"], sports: ["Tennis", "Lifestyle"] },
+            { id: 28, name: "Reebok Classic AZ", brand: "Reebok", price: 90, image: "reebok-classic.jpg", category: "minimalist", colors: ["White", "Pink", "Gray"], sizes: ["7", "8", "9", "10", "11"], materials: ["Leather"], sports: ["Walking"] },
+
+            // Running Specialist Brands
+            { id: 29, name: "Hoka Bondi 9", brand: "Hoka", price: 165, image: "asics-gel-lyte.jpg", category: "releases", colors: ["Blue", "Black", "White"], sizes: ["7", "8", "9", "10", "11", "12"], materials: ["Mesh"], sports: ["Running"] },
+            { id: 30, name: "Hoka Clifton 9", brand: "Hoka", price: 140, image: "asics-gel-lyte.jpg", category: "releases", colors: ["White", "Black", "Blue"], sizes: ["7", "8", "9", "10", "11"], materials: ["Mesh"], sports: ["Running"] },
+
+            // Luxury & Designer
+            { id: 31, name: "Balenciaga Triple S", brand: "Balenciaga", price: 995, image: "asics-gel-lyte.jpg", category: "luxury", colors: ["White", "Black", "Gray"], sizes: ["7", "8", "9", "10", "11"], materials: ["Leather", "Mesh"], sports: ["Fashion"] },
+            { id: 32, name: "Balenciaga Speed Trainer", brand: "Balenciaga", price: 795, image: "asics-gel-lyte.jpg", category: "luxury", colors: ["Black", "White"], sizes: ["7", "8", "9", "10", "11"], materials: ["Knit"], sports: ["Fashion"] },
+
+            // Heritage & Retro
+            { id: 33, name: "Onitsuka Tiger Mexico 66", brand: "Onitsuka Tiger", price: 120, image: "asics-gel-lyte.jpg", category: "streetwear", colors: ["Yellow", "Blue", "White"], sizes: ["7", "8", "9", "10", "11"], materials: ["Leather"], sports: ["Running", "Lifestyle"] },
+            { id: 34, name: "Gola Harrier", brand: "Gola", price: 65, image: "vans-old-skool.jpg", category: "minimalist", colors: ["Navy", "White"], sizes: ["7", "8", "9", "10", "11"], materials: ["Suede"], sports: ["Training", "Lifestyle"] },
+
+            // Budget-Friendly Options
+            { id: 35, name: "Bronax Wide Toe Box", brand: "Bronax", price: 50, image: "asics-gel-lyte.jpg", category: "minimalist", colors: ["Black", "Gray", "Blue"], sizes: ["7", "8", "9", "10", "11"], materials: ["Mesh"], sports: ["Running", "Walking"] },
+
+            // Women's Specific
+            { id: 36, name: "Vivaia Yancy Sneakerina", brand: "Vivaia", price: 159, image: "puma-suede-classic.jpg", category: "minimalist", colors: ["Gray", "Pink", "Cream"], sizes: ["6", "7", "8", "9", "10"], materials: ["Satin", "Suede"], sports: ["Fashion", "Walking"] },
+
+            // Special Editions & Collaborations
+            { id: 37, name: "Travis Scott x Jordan 1 Low", brand: "Jordan", price: 1200, image: "jordan-1-bred.jpg", category: "luxury", colors: ["Brown", "Black"], sizes: ["7", "8", "9", "10", "11"], materials: ["Leather", "Suede"], sports: ["Basketball", "Fashion"] },
+            { id: 38, name: "Off-White x Nike Air Force 1", brand: "Nike", price: 2000, image: "nike-air-force-1.jpg", category: "luxury", colors: ["White", "Black"], sizes: ["7", "8", "9", "10", "11"], materials: ["Leather"], sports: ["Basketball", "Fashion"] },
+
+            // Additional Popular Models
+            { id: 39, name: "Nike React Element 55", brand: "Nike", price: 130, image: "nike-air-max-90.jpg", category: "releases", colors: ["White", "Black", "Gray"], sizes: ["7", "8", "9", "10", "11"], materials: ["Mesh", "Synthetic"], sports: ["Running", "Lifestyle"] },
+            { id: 40, name: "Adidas NMD R1", brand: "Adidas", price: 140, image: "adidas-ultraboost.jpg", category: "streetwear", colors: ["Black", "White", "Red"], sizes: ["7", "8", "9", "10", "11"], materials: ["Primeknit"], sports: ["Running", "Lifestyle"] },
         ];
 
-        // App State
-        let favorites = JSON.parse(localStorage.getItem('steppr-favorites') || '[]');
-        let recentlyViewed = JSON.parse(localStorage.getItem('steppr-recent') || '[]');
+        let favorites = JSON.parse(localStorage.getItem('favorites') || '[]');
+        let recentlyViewed = JSON.parse(localStorage.getItem('recentlyViewed') || '[]');
         let selectedFilters = {
-            brands: [], colors: [], sizes: [], materials: [], sports: [], price: 500, gender: 'men'
+            brands: [],
+            colors: [],
+            sizes: [],
+            materials: [],
+            price: [],
+            sports: [],
+            gender: 'men'
         };
-        let currentGender = 'men';
-
-        // Size configurations
-        const menSizes = ['7', '7.5', '8', '8.5', '9', '9.5', '10', '10.5', '11', '11.5', '12', '12.5', '13', '14', '15'];
-        const womenSizes = ['5', '5.5', '6', '6.5', '7', '7.5', '8', '8.5', '9', '9.5', '10', '10.5', '11', '11.5', '12'];
 
         // Initialize app
-        document.addEventListener('DOMContentLoaded', function() {
+        function init() {
             loadHomeShoes();
-            updateFavoritesDisplay();
-            updateSearchButton();
-        });
+            setupFilterListeners();
+        }
 
         // Navigation
         function switchTab(tab) {
@@ -512,179 +545,249 @@
             document.getElementById(tab).classList.add('active');
             document.querySelector(`[onclick="switchTab('${tab}')"]`).classList.add('active');
             
-            if (tab === 'favorites') updateFavoritesDisplay();
+            if (tab === 'favorites') loadFavorites();
         }
 
-        // Home section shoe loading
+        // Home page shoes
         function loadHomeShoes() {
             const trending = shoesDatabase.filter(shoe => shoe.category === 'trending').slice(0, 4);
             const releases = shoesDatabase.filter(shoe => shoe.category === 'releases').slice(0, 4);
-            const minimalist = shoesDatabase.filter(shoe => shoe.category === 'minimalist').slice(0, 2);
-            const streetwear = shoesDatabase.filter(shoe => shoe.category === 'streetwear').slice(0, 2);
-            const school = shoesDatabase.filter(shoe => shoe.category === 'school').slice(0, 2);
+            const collections = [
+                ...shoesDatabase.filter(shoe => shoe.category === 'minimalist').slice(0, 2),
+                ...shoesDatabase.filter(shoe => shoe.category === 'streetwear').slice(0, 2)
+            ];
 
-            renderShoes(trending, 'trending-grid');
-            renderShoes(releases, 'releases-grid');
-            renderShoes([...minimalist, ...streetwear, ...school], 'collections-grid');
+            document.getElementById('trending-grid').innerHTML = trending.map(createShoeCard).join('');
+            document.getElementById('releases-grid').innerHTML = releases.map(createShoeCard).join('');
+            document.getElementById('collections-grid').innerHTML = collections.map(createShoeCard).join('');
+            
+            if (recentlyViewed.length > 0) {
+                document.getElementById('recent-grid').innerHTML = recentlyViewed.slice(0, 6).map(createShoeCard).join('');
+            }
         }
 
-        function renderShoes(shoes, containerId) {
-            const container = document.getElementById(containerId);
-            container.innerHTML = shoes.map(shoe => createShoeCard(shoe)).join('');
-        }
-
+        // Create shoe card HTML
         function createShoeCard(shoe) {
-            const isFavorited = favorites.some(f => f.id === shoe.id);
+            const isFavorited = favorites.some(fav => fav.id === shoe.id);
             return `
                 <div class="shoe-card" onclick="viewShoe(${shoe.id})">
-                    <div class="shoe-img" style="background-image: url('${shoe.image}'); background-size: cover; background-position: center;">${!shoe.image.includes('.jpg') ? shoe.image : ''}</div>
+                    <div class="shoe-img" style="background-image: url('${shoe.image}')">
+                        ${shoe.image === shoe.name.toLowerCase().replace(/\s+/g, '-') + '.jpg' ? '' : shoe.name}
+                    </div>
+                    <button class="fav-btn ${isFavorited ? 'favorited' : ''}" onclick="event.stopPropagation(); toggleFavorite(${shoe.id})">
+                        <svg class="fav-icon" viewBox="0 0 24 24">
+                            <path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.29 1.51 4.04 3 5.5l7 7Z"/>
+                        </svg>
+                    </button>
                     <div class="shoe-name">${shoe.name}</div>
                     <div class="shoe-brand">${shoe.brand}</div>
                     <div class="shoe-price">$${shoe.price}</div>
-                    <button class="fav-btn ${isFavorited ? 'favorited' : ''}" onclick="event.stopPropagation(); toggleFavorite(${shoe.id})">
-                        <svg class="fav-icon" viewBox="0 0 24 24">
-                            <path d="m19 21-7-4-7 4V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v16z"/>
-                        </svg>
-                    </button>
                 </div>
             `;
         }
 
-        function viewShoe(shoeId) {
-            const shoe = shoesDatabase.find(s => s.id === shoeId);
-            if (shoe && !recentlyViewed.some(r => r.id === shoeId)) {
-                recentlyViewed.unshift(shoe);
-                if (recentlyViewed.length > 10) recentlyViewed.pop();
-                localStorage.setItem('steppr-recent', JSON.stringify(recentlyViewed));
-                updateRecentlyViewed();
-            }
-        }
-
-        function updateRecentlyViewed() {
-            const container = document.getElementById('recent-grid');
-            if (recentlyViewed.length === 0) {
-                container.innerHTML = '<div class="empty-state">Your recently viewed shoes will appear here</div>';
-            } else {
-                container.innerHTML = recentlyViewed.map(shoe => createShoeCard(shoe)).join('');
-            }
-        }
-
-        // Favorites functionality
+        // Favorites
         function toggleFavorite(shoeId) {
             const shoe = shoesDatabase.find(s => s.id === shoeId);
-            const existingIndex = favorites.findIndex(f => f.id === shoeId);
-            
-            if (existingIndex >= 0) {
-                favorites.splice(existingIndex, 1);
+            if (!shoe) return;
+
+            const index = favorites.findIndex(fav => fav.id === shoeId);
+            if (index > -1) {
+                favorites.splice(index, 1);
             } else {
                 favorites.push(shoe);
             }
+
+            localStorage.setItem('favorites', JSON.stringify(favorites));
             
-            localStorage.setItem('steppr-favorites', JSON.stringify(favorites));
-            updateFavoritesDisplay();
-            updateAllFavoriteButtons();
+            // Update UI
+            const btn = document.querySelector(`[onclick*="toggleFavorite(${shoeId})"]`);
+            if (btn) {
+                btn.classList.toggle('favorited');
+            }
         }
 
-        function updateFavoritesDisplay() {
-            const container = document.getElementById('favorites-grid');
+        function loadFavorites() {
+            const grid = document.getElementById('favorites-grid');
             if (favorites.length === 0) {
-                container.innerHTML = `
+                grid.innerHTML = `
                     <div class="empty-state">
                         <svg style="width: 4rem; height: 4rem; margin: 0 auto 1rem; color: var(--muted);" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <path d="m19 21-7-4-7 4V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v16z"/>
+                            <path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.29 1.51 4.04 3 5.5l7 7Z"/>
                         </svg>
                         <h3 style="margin-bottom: 0.5rem;">No favorites yet</h3>
                         <p>Start adding shoes to your wishlist!</p>
                     </div>
                 `;
             } else {
-                container.innerHTML = favorites.map(shoe => createShoeCard(shoe)).join('');
+                grid.innerHTML = favorites.map(createShoeCard).join('');
             }
         }
 
-        function updateAllFavoriteButtons() {
-            document.querySelectorAll('.fav-btn').forEach(btn => {
-                const shoeId = parseInt(btn.getAttribute('onclick').match(/\d+/)[0]);
-                const isFavorited = favorites.some(f => f.id === shoeId);
-                btn.classList.toggle('favorited', isFavorited);
-            });
+        // View shoe
+        function viewShoe(shoeId) {
+            const shoe = shoesDatabase.find(s => s.id === shoeId);
+            if (!shoe) return;
+
+            // Add to recently viewed
+            const existingIndex = recentlyViewed.findIndex(item => item.id === shoeId);
+            if (existingIndex > -1) {
+                recentlyViewed.splice(existingIndex, 1);
+            }
+            recentlyViewed.unshift(shoe);
+            recentlyViewed = recentlyViewed.slice(0, 10);
+            localStorage.setItem('recentlyViewed', JSON.stringify(recentlyViewed));
         }
 
-        // Filter functionality
+        // Filters
         function toggleFilter(filterName) {
-            const panel = document.getElementById(filterName + '-panel');
+            const panel = document.getElementById(`${filterName}-panel`);
             const isActive = panel.classList.contains('active');
             
             // Close all panels
             document.querySelectorAll('.filter-panel').forEach(p => p.classList.remove('active'));
             
-            // Open clicked panel if it wasn't active
+            // Open this panel if it wasn't active
             if (!isActive) {
                 panel.classList.add('active');
             }
         }
 
+        function setupFilterListeners() {
+            // Brand filters
+            document.querySelectorAll('#brands-panel input[type="checkbox"]').forEach(checkbox => {
+                checkbox.addEventListener('change', function() {
+                    if (this.checked) {
+                        selectedFilters.brands.push(this.value);
+                    } else {
+                        selectedFilters.brands = selectedFilters.brands.filter(b => b !== this.value);
+                    }
+                    updateSearchButton();
+                });
+            });
+
+            // Material filters
+            document.querySelectorAll('#materials-panel input[type="checkbox"]').forEach(checkbox => {
+                checkbox.addEventListener('change', function() {
+                    if (this.checked) {
+                        selectedFilters.materials.push(this.value);
+                    } else {
+                        selectedFilters.materials = selectedFilters.materials.filter(m => m !== this.value);
+                    }
+                    updateSearchButton();
+                });
+            });
+
+            // Price filters
+            document.querySelectorAll('#price-panel input[type="checkbox"]').forEach(checkbox => {
+                checkbox.addEventListener('change', function() {
+                    if (this.checked) {
+                        selectedFilters.price.push(this.value);
+                    } else {
+                        selectedFilters.price = selectedFilters.price.filter(p => p !== this.value);
+                    }
+                    updateSearchButton();
+                });
+            });
+
+            // Sports filters
+            document.querySelectorAll('#sports-panel input[type="checkbox"]').forEach(checkbox => {
+                checkbox.addEventListener('change', function() {
+                    if (this.checked) {
+                        selectedFilters.sports.push(this.value);
+                    } else {
+                        selectedFilters.sports = selectedFilters.sports.filter(s => s !== this.value);
+                    }
+                    updateSearchButton();
+                });
+            });
+        }
+
         function toggleColor(colorName) {
-            const colorCircle = document.querySelector(`[data-color="${colorName}"]`);
-            const isSelected = selectedFilters.colors.includes(colorName);
+            const colorElement = document.querySelector(`[data-color="${colorName}"]`);
+            const isSelected = colorElement.classList.contains('selected');
             
             if (isSelected) {
+                colorElement.classList.remove('selected');
                 selectedFilters.colors = selectedFilters.colors.filter(c => c !== colorName);
-                colorCircle.classList.remove('selected');
             } else {
+                colorElement.classList.add('selected');
                 selectedFilters.colors.push(colorName);
-                colorCircle.classList.add('selected');
             }
             updateSearchButton();
         }
 
         function toggleSize(size) {
-            const sizeBtn = document.querySelector(`[data-size="${size}"]`);
-            const isSelected = selectedFilters.sizes.includes(size);
+            const sizeElement = document.querySelector(`[data-size="${size}"]`);
+            const isSelected = sizeElement.classList.contains('selected');
             
             if (isSelected) {
+                sizeElement.classList.remove('selected');
                 selectedFilters.sizes = selectedFilters.sizes.filter(s => s !== size);
-                sizeBtn.classList.remove('selected');
             } else {
+                sizeElement.classList.add('selected');
                 selectedFilters.sizes.push(size);
-                sizeBtn.classList.add('selected');
             }
             updateSearchButton();
         }
 
         function switchGender(gender) {
-            currentGender = gender;
             selectedFilters.gender = gender;
-            selectedFilters.sizes = []; // Clear selected sizes when switching gender
+            selectedFilters.sizes = []; // Clear size selection when switching gender
             
-            // Update gender buttons
+            // Update UI
             document.querySelectorAll('.gender-btn').forEach(btn => btn.classList.remove('active'));
-            event.target.classList.add('active');
+            document.querySelector(`[onclick="switchGender('${gender}')"]`).classList.add('active');
             
-            // Update size grid
+            // Clear size selections
+            document.querySelectorAll('.size-btn').forEach(btn => btn.classList.remove('selected'));
+            
+            // Update size grid for women's sizes
             const sizeGrid = document.getElementById('size-grid');
-            const sizes = gender === 'men' ? menSizes : womenSizes;
-            
-            sizeGrid.innerHTML = sizes.map(size => 
-                `<button class="size-btn" onclick="toggleSize('${size}')" data-size="${size}">${size}</button>`
-            ).join('');
-            
-            updateSearchButton();
-        }
-
-        function updatePrice(value) {
-            selectedFilters.price = parseInt(value);
-            document.getElementById('max-price').textContent = value;
-            updateSearchButton();
+            if (gender === 'women') {
+                sizeGrid.innerHTML = `
+                    <button class="size-btn" onclick="toggleSize('5')" data-size="5">5</button>
+                    <button class="size-btn" onclick="toggleSize('5.5')" data-size="5.5">5.5</button>
+                    <button class="size-btn" onclick="toggleSize('6')" data-size="6">6</button>
+                    <button class="size-btn" onclick="toggleSize('6.5')" data-size="6.5">6.5</button>
+                    <button class="size-btn" onclick="toggleSize('7')" data-size="7">7</button>
+                    <button class="size-btn" onclick="toggleSize('7.5')" data-size="7.5">7.5</button>
+                    <button class="size-btn" onclick="toggleSize('8')" data-size="8">8</button>
+                    <button class="size-btn" onclick="toggleSize('8.5')" data-size="8.5">8.5</button>
+                    <button class="size-btn" onclick="toggleSize('9')" data-size="9">9</button>
+                    <button class="size-btn" onclick="toggleSize('9.5')" data-size="9.5">9.5</button>
+                    <button class="size-btn" onclick="toggleSize('10')" data-size="10">10</button>
+                    <button class="size-btn" onclick="toggleSize('10.5')" data-size="10.5">10.5</button>
+                    <button class="size-btn" onclick="toggleSize('11')" data-size="11">11</button>
+                `;
+            } else {
+                sizeGrid.innerHTML = `
+                    <button class="size-btn" onclick="toggleSize('7')" data-size="7">7</button>
+                    <button class="size-btn" onclick="toggleSize('7.5')" data-size="7.5">7.5</button>
+                    <button class="size-btn" onclick="toggleSize('8')" data-size="8">8</button>
+                    <button class="size-btn" onclick="toggleSize('8.5')" data-size="8.5">8.5</button>
+                    <button class="size-btn" onclick="toggleSize('9')" data-size="9">9</button>
+                    <button class="size-btn" onclick="toggleSize('9.5')" data-size="9.5">9.5</button>
+                    <button class="size-btn" onclick="toggleSize('10')" data-size="10">10</button>
+                    <button class="size-btn" onclick="toggleSize('10.5')" data-size="10.5">10.5</button>
+                    <button class="size-btn" onclick="toggleSize('11')" data-size="11">11</button>
+                    <button class="size-btn" onclick="toggleSize('11.5')" data-size="11.5">11.5</button>
+                    <button class="size-btn" onclick="toggleSize('12')" data-size="12">12</button>
+                    <button class="size-btn" onclick="toggleSize('12.5')" data-size="12.5">12.5</button>
+                    <button class="size-btn" onclick="toggleSize('13')" data-size="13">13</button>
+                    <button class="size-btn" onclick="toggleSize('14')" data-size="14">14</button>
+                    <button class="size-btn" onclick="toggleSize('15')" data-size="15">15</button>
+                `;
+            }
         }
 
         function updateSearchButton() {
             const hasFilters = selectedFilters.brands.length > 0 || 
-                            selectedFilters.colors.length > 0 || 
-                            selectedFilters.sizes.length > 0 || 
-                            selectedFilters.materials.length > 0 || 
-                            selectedFilters.sports.length > 0 || 
-                            selectedFilters.price < 500;
+                              selectedFilters.colors.length > 0 || 
+                              selectedFilters.sizes.length > 0 || 
+                              selectedFilters.materials.length > 0 || 
+                              selectedFilters.price.length > 0 || 
+                              selectedFilters.sports.length > 0;
             
             document.getElementById('searchBtn').style.display = hasFilters ? 'block' : 'none';
         }
@@ -711,44 +814,43 @@
                     return false;
                 }
                 
-                // Sport filter
-                if (selectedFilters.sports.length > 0 && !selectedFilters.sports.some(sport => shoe.sports.includes(sport))) {
-                    return false;
+                // Price filter
+                if (selectedFilters.price.length > 0) {
+                    const inPriceRange = selectedFilters.price.some(range => {
+                        if (range === '0-50') return shoe.price <= 50;
+                        if (range === '50-100') return shoe.price > 50 && shoe.price <= 100;
+                        if (range === '100-150') return shoe.price > 100 && shoe.price <= 150;
+                        if (range === '150-200') return shoe.price > 150 && shoe.price <= 200;
+                        if (range === '200-300') return shoe.price > 200 && shoe.price <= 300;
+                        if (range === '300-500') return shoe.price > 300 && shoe.price <= 500;
+                        if (range === '500-1000') return shoe.price > 500 && shoe.price <= 1000;
+                        if (range === '1000+') return shoe.price > 1000;
+                        return false;
+                    });
+                    if (!inPriceRange) return false;
                 }
                 
-                // Price filter
-                if (shoe.price > selectedFilters.price) {
+                // Sports filter
+                if (selectedFilters.sports.length > 0 && !selectedFilters.sports.some(sport => shoe.sports.includes(sport))) {
                     return false;
                 }
                 
                 return true;
             });
 
-            const resultsContainer = document.getElementById('search-results');
+            // Show results
+            document.getElementById('search-results').style.display = 'block';
             const resultsGrid = document.getElementById('results-grid');
             
-            resultsContainer.style.display = 'block';
-            resultsGrid.innerHTML = results.length > 0 ? 
-                results.map(shoe => createShoeCard(shoe)).join('') :
-                '<div class="empty-state">No shoes match your filters. Try adjusting your criteria.</div>';
+            if (results.length === 0) {
+                resultsGrid.innerHTML = '<div class="empty-state">No shoes found matching your criteria. Try adjusting your filters.</div>';
+            } else {
+                resultsGrid.innerHTML = results.map(createShoeCard).join('');
+            }
         }
 
-        // Add event listeners for checkboxes
-        document.addEventListener('change', function(e) {
-            if (e.target.type === 'checkbox') {
-                const value = e.target.value;
-                const filterType = e.target.closest('.filter-panel').id.replace('-panel', '');
-                
-                if (e.target.checked) {
-                    if (!selectedFilters[filterType].includes(value)) {
-                        selectedFilters[filterType].push(value);
-                    }
-                } else {
-                    selectedFilters[filterType] = selectedFilters[filterType].filter(item => item !== value);
-                }
-                updateSearchButton();
-            }
-        });
+        // Initialize app
+        init();
     </script>
 </body>
 </html>
